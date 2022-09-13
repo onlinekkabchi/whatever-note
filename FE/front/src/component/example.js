@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, React } from "react";
 
 const POSITION = { x: 0, y: 0 };
 
@@ -9,18 +9,7 @@ export default function DraggableExample({ children }) {
         translation: { x: 0, y: 0 },
     });
 
-    // const handleMouseDown = useCallback(({ clientX, clientY }) => {
-    //     const origin = { x: clientX, y: clientY };
-    //     setMouseState((mouseState) => ({
-    //         ...mouseState,
-    //         origin,
-    //         isDragging: true,
-    //     }));
-
-    //     console.log(mouseState.isDragging);
-    // }, []);
-
-    const handleMouseDown = ({ clientX, clientY }) => {
+    const handleMouseDown = useCallback(({ clientX, clientY }) => {
         const origin = { x: clientX, y: clientY };
         setMouseState((mouseState) => ({
             ...mouseState,
@@ -29,7 +18,19 @@ export default function DraggableExample({ children }) {
         }));
 
         console.log(mouseState.isDragging);
-    };
+    }, []);
+
+    // const handleMouseDown = ({ clientX, clientY }) => {
+    //     const origin = { x: clientX, y: clientY };
+    //     setMouseState((mouseState) => ({
+    //         ...mouseState,
+    //         origin,
+    //         isDragging: true,
+    //     }));
+
+    //     console.log(origin);
+    //     console.log(mouseState.isDragging);
+    // };
 
     const handleMouseMove = useCallback(
         ({ clientX, clientY }) => {
@@ -38,8 +39,9 @@ export default function DraggableExample({ children }) {
                 y: clientY - mouseState.origin.y,
             };
 
-            console.log(mouseState.origin);
-            console.log(translation);
+            console.log(mouseState.isDragging);
+            // console.log(mouseState.origin);
+            // console.log(translation);
 
             setMouseState(() => ({
                 ...mouseState,
@@ -48,6 +50,21 @@ export default function DraggableExample({ children }) {
         },
         [mouseState.origin]
     );
+
+    // const handleMouseMove = ({ clientX, clientY }) => {
+    //     const translation = {
+    //         x: clientX - mouseState.origin.x,
+    //         y: clientY - mouseState.origin.y,
+    //     };
+
+    //     console.log(mouseState.origin);
+    //     console.log(translation);
+
+    //     setMouseState(() => ({
+    //         ...mouseState,
+    //         translation,
+    //     }));
+    // };
 
     const handleMouseUp = useCallback(() => {
         setMouseState((mouseState) => ({
@@ -59,6 +76,16 @@ export default function DraggableExample({ children }) {
         console.log(mouseState.isDragging);
     }, []);
 
+    // const handleMouseUp = () => {
+    //     setMouseState((mouseState) => ({
+    //         ...mouseState,
+    //         translation: POSITION,
+    //         isDragging: false,
+    //     }));
+
+    //     console.log(mouseState.isDragging);
+    // };
+
     useEffect(() => {
         if (mouseState.isDragging) {
             window.addEventListener("mousemove", handleMouseMove);
@@ -69,16 +96,24 @@ export default function DraggableExample({ children }) {
         }
     }, [mouseState.isDragging, handleMouseMove, handleMouseUp]);
 
-    const styles = useMemo(
-        () => ({
-            cursor: mouseState.isDragging ? "-webkit-grabbing" : "-webkit-",
-            transform: `translate(${mouseState.translation.x}px, ${mouseState.translation.y}px)`,
-            transition: mouseState.isDragging ? "none" : "transform 50ms",
-            zIndex: 2,
-            position: "absolute",
-        }),
-        [mouseState.isDragging, mouseState.translation]
-    );
+    // const styles = useMemo(
+    //     () => ({
+    //         cursor: mouseState.isDragging ? "-webkit-grabbing" : "-webkit-",
+    //         transform: `translate(${mouseState.translation.x}px, ${mouseState.translation.y}px)`,
+    //         transition: mouseState.isDragging ? "none" : "transform 100ms",
+    //         zIndex: 2,
+    //         position: "absolute",
+    //     }),
+    //     [mouseState.isDragging, mouseState.translation]
+    // );
+
+    const styles = {
+        cursor: mouseState.isDragging ? "-webkit-grabbing" : "-webkit-",
+        transform: `translate(${mouseState.translation.x}px, ${mouseState.translation.y}px)`,
+        transition: mouseState.isDragging ? "none" : "transform 100ms",
+        zIndex: 2,
+        position: "absolute",
+    };
 
     return (
         <div style={styles} onMouseDown={handleMouseDown}>

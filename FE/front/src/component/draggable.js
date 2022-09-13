@@ -10,13 +10,10 @@ export default function Draggable({ children }) {
     });
 
     const handleMouseDown = useCallback(({ clientX, clientY }) => {
-        const mouseStartPosition = { x: clientX, y: clientY };
-
-        console.log(mouseStartPosition);
-
+        const origin = { x: clientX, y: clientY };
         setMouseState((mouseState) => ({
             ...mouseState,
-            origin: mouseStartPosition,
+            origin,
             isDragging: true,
         }));
     }, []);
@@ -26,16 +23,10 @@ export default function Draggable({ children }) {
             x: clientX - mouseState.origin.x,
             y: 0,
         };
-
-        console.log(clientX, clientY);
-        console.log(mouseState.origin.x, mouseState.origin.y);
-
         setMouseState((mouseState) => ({
             ...mouseState,
             translation: mouseMovePosition,
         }));
-
-        console.log("why" + mouseState.isDragging);
     }, []);
 
     const handleMouseUp = useCallback(() => {
@@ -44,19 +35,15 @@ export default function Draggable({ children }) {
             translation: POSITION,
             isDragging: false,
         }));
-
-        console.log(mouseState.isDragging);
     }, []);
 
     useEffect(() => {
         if (mouseState.isDragging === true) {
             window.addEventListener("mousemove", handleMouseMove);
             window.addEventListener("mouseup", handleMouseUp);
-            console.log("start");
         } else if (mouseState.isDragging === false) {
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseup", handleMouseUp);
-            console.log("end");
         }
     }, [mouseState.isDragging, handleMouseMove, handleMouseUp]);
 
