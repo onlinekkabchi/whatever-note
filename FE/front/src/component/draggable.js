@@ -2,27 +2,28 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 
 const POSITION = { x: 0, y: 0 };
 
-function Draggable({ children }) {
+export default function Draggable({ children }) {
     const [mouseState, setMouseState] = useState({
         isDragging: false,
-        origin: { x: 0, y: 0 },
-        translation: { x: 0, y: 0 },
+        origin: POSITION,
+        translation: POSITION,
     });
 
     const handleMouseDown = useCallback(({ clientX, clientY }) => {
-        const origin = { x: clientX, y: clientY };
+        const mouseStartPosition = { x: clientX, y: clientY };
 
-        console.log("start with" + clientX + clientY);
+        console.log(mouseStartPosition);
+
         setMouseState((mouseState) => ({
             ...mouseState,
-            origin,
+            origin: mouseStartPosition,
             isDragging: true,
         }));
     }, []);
 
     const handleMouseMove = useCallback(({ clientX, clientY }) => {
-        const translation = {
-            x: clientX,
+        const mouseMovePosition = {
+            x: clientX - mouseState.origin.x,
             y: 0,
         };
 
@@ -31,7 +32,7 @@ function Draggable({ children }) {
 
         setMouseState((mouseState) => ({
             ...mouseState,
-            translation,
+            translation: mouseMovePosition,
         }));
 
         console.log("why" + mouseState.isDragging);
@@ -76,5 +77,3 @@ function Draggable({ children }) {
         </div>
     );
 }
-
-export default Draggable;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Draggable from "./draggable";
+import DraggableExample from "./example";
 
 export default function Collection() {
     const [newNoteName, setnewNoteName] = useState("");
@@ -51,9 +52,9 @@ export default function Collection() {
                     return (
                         <li key={e.id} className="note">
                             {e.name}
-                            <Draggable>
+                            <DraggableExample>
                                 <div className="note--edit-btn">수정</div>
-                            </Draggable>
+                            </DraggableExample>
                         </li>
                     );
                 })}
