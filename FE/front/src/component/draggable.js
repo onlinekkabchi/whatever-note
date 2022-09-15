@@ -41,6 +41,7 @@ export default function Draggable({ children }) {
         if (mouseState.isDragging === true) {
             window.addEventListener("mousemove", handleMouseMove);
             window.addEventListener("mouseup", handleMouseUp);
+            window.addEventListener("mouseleave", handleMouseUp); // element와 마우스 위치가 어긋날때 isDragging의 상태가 바뀌지 않는 에러 방지.
         } else if (mouseState.isDragging === false) {
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseup", handleMouseUp);
@@ -49,6 +50,8 @@ export default function Draggable({ children }) {
 
     const styles = useMemo(
         () => ({
+            background: "#CCD5AE",
+            height: "100px",
             cursor: mouseState.isDragging ? "-webkit-grabbing" : "-webkit-",
             transform: `translate(${mouseState.translation.x}px, ${mouseState.translation.y}px)`,
             transition: mouseState.isDragging ? "none" : "transform 50ms",
