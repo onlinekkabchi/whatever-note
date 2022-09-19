@@ -9,7 +9,7 @@ export default function Draggable({ children }) {
         translation: POSITION,
     });
 
-    const handleMouseDown = useCallback(({ clientX, clientY }) => {
+    const handleMouseOver = useCallback(({ clientX, clientY }) => {
         const origin = { x: clientX, y: clientY };
         setMouseState((mouseState) => ({
             ...mouseState,
@@ -56,13 +56,12 @@ export default function Draggable({ children }) {
             transform: `translate(${mouseState.translation.x}px, ${mouseState.translation.y}px)`,
             transition: mouseState.isDragging ? "none" : "transform 50ms",
             zIndex: 1,
-            position: "absolute",
         }),
         [mouseState.isDragging, mouseState.translation]
     );
 
     return (
-        <div style={styles} onMouseDown={handleMouseDown}>
+        <div style={styles} onMouseOver={handleMouseOver}>
             {children}
         </div>
     );

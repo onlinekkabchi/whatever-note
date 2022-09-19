@@ -1,3 +1,8 @@
+### Library
+
+-   styled-component 사용
+-   scss
+
 ### FE 요구사항
 
 1. TypeScript
