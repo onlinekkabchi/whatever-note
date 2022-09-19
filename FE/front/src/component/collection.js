@@ -25,7 +25,6 @@ export default function Collection() {
         } else {
             setNote([...notes, newNote]);
         }
-        console.log(newNote);
     };
 
     useEffect(() => {});

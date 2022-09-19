@@ -14,8 +14,6 @@ export default function ChangeName() {
             name: noteName,
             id: newId,
         };
-
-        console.log(newNote);
     };
 
     return (
@@ -27,13 +25,6 @@ export default function ChangeName() {
                 onChange={handleChange}
                 value={noteName}
             />
-            <button
-                type="submit"
-                className="input-btn"
-                onClick={changeNoteName}
-            >
-                add
-            </button>
         </div>
     );
 }
