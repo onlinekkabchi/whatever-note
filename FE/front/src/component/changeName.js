@@ -1,30 +1,27 @@
 import { useState } from "react";
 
-export default function ChangeName() {
-    const [noteName, setNoteName] = useState("");
+export default function NoteNameTag(props) {
+    const [noteName, setNoteName] = useState(<>{props.initialnotename}</>);
     const [newNoteName, setNewNoteName] = useState("");
 
     const handleChange = (event) => {
-        setNoteName(event.target.value);
+        setNewNoteName(event.target.value);
+        if (props.decidedNewName) {
+            setNoteName(newNoteName);
+        }
     };
 
-    const changeNoteName = () => {
-        const newId = noteName.length; // 리스트에 키값 부여하는 문제 더 생각해보기
-        const newNote = {
-            name: noteName,
-            id: newId,
-        };
-    };
-
-    return (
+    const writeNewNoteName = (
         <div className="collection--input-box">
             <input
                 type="text"
                 className="collection--input--naming"
                 name="text"
                 onChange={handleChange}
-                value={noteName}
+                value={newNoteName}
             />
         </div>
     );
+
+    return <>{props.nameTag ? <>{noteName}</> : <>{writeNewNoteName}</>}</>;
 }

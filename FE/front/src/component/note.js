@@ -1,34 +1,29 @@
 import { useState, useEffect, useRef, useReducer, useCallback } from "react";
-import ChangeName from "./changeName";
 import { Button } from "./button";
+import NoteNameTag from "./changeName";
 
 const POSITION = { x: 0, y: 0 };
 
 function buttonReducer(state, action) {
     switch (action.type) {
-        case "note-name":
-            return <p>{state}</p>;
         case "edit":
-            return <Button />;
+            return <div>수정버튼임시잠금</div>;
         case "remove":
-            return <Button />;
+            return <div>삭제</div>;
         default:
             throw new Error();
     }
 }
 
 export default function Note(props) {
-    const noteInitialName = <>{props.name}</>;
     const [mouseTragger, setMouseTragger] = useState({
         isDragging: false,
         origin: POSITION,
         translation: POSITION,
     });
-    const [longPressTriggered, setLongPressTriggered] = useState({
-        holdEnoughTime: false,
-    });
+    const [longPressTriggered, setLongPressTriggered] = useState(true);
     const timerRef = useRef(null);
-    const [noteState, dispatch] = useReducer(buttonReducer, noteInitialName);
+    const [noteState, dispatch] = useReducer(buttonReducer, null);
 
     const startMouseTragger = useCallback(({ clientX, clientY }) => {
         const origin = { x: clientX, y: clientY };
@@ -37,19 +32,23 @@ export default function Note(props) {
             origin,
             isDragging: true,
         }));
-        console.log(origin);
     }, []);
 
     const handleMouseTragger = useCallback(({ clientX, clientY }) => {
-        if (clientX - mouseTragger.origin.x) {
+        const editDistance = clientX - mouseTragger.origin.x;
+        const removeDIstance = mouseTragger.origin.x - clientX;
+        if (editDistance > 100) {
             dispatch({ type: "edit" });
+            setLongPressTriggered(true);
+        } else if (removeDIstance > 100) {
+            dispatch({ type: "remove" });
         }
         const mouseMovePosition = {
             x: clientX,
             y: 0,
         };
-        console.log(clientX);
-        console.log(mouseMovePosition.x);
+        // console.log(clientX);
+        // console.log(mouseMovePosition.x);
         setMouseTragger((mouseTragger) => ({
             ...mouseTragger,
             translation: mouseMovePosition,
@@ -61,17 +60,18 @@ export default function Note(props) {
             ...mouseTragger,
             isDragging: false,
         }));
+        console.log("mouse tragging stoped");
     }, []);
 
     const pressTimer = () => {
         console.log("presstimer");
-        if (longPressTriggered.holdEnoughTime === true) {
+        if (longPressTriggered === true) {
             timerRef.current = setTimeout(() => {
-                setLongPressTriggered({ holdEnoughTime: false });
+                setLongPressTriggered(false);
             }, 1000);
-        } else if (longPressTriggered.holdEnoughTime === false) {
+        } else if (longPressTriggered === false) {
             timerRef.current = setTimeout(() => {
-                setLongPressTriggered({ holdEnoughTime: true });
+                setLongPressTriggered(true);
             }, 1000);
         }
     };
@@ -102,11 +102,12 @@ export default function Note(props) {
             onMouseDown={startMouseTragger}
             onMouseUp={removePressTimer}
         >
-            {longPressTriggered.holdEnoughTime ? (
-                <ChangeName />
-            ) : (
-                <div>{noteState}</div>
-            )}
+            <NoteNameTag
+                decidedNewName={true}
+                nameTag={longPressTriggered}
+                initialnotename={props.name}
+            />
+            {noteState}
         </li>
     );
 }

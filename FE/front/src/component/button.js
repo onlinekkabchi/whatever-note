@@ -1,6 +1,6 @@
 import { Children, useCallback, useEffect, useState } from "react";
 
-function Button() {
+function Button(props) {
     const [mousePosition, setMousePosition] = useState({
         translation: { x: 120, y: 0 },
     });
@@ -29,13 +29,16 @@ function Button() {
     const buttonStyle = {
         background: "#CCD5AE",
         height: "100px",
+        width: "200px",
         cursor: "-webkit-grabbing",
         transform: `translate(${mousePosition.translation.x}px, ${mousePosition.translation.y}px)`,
+
         transition: "transform 50ms",
+        position: "absolute",
         zIndex: 1,
     };
 
-    return <div style={buttonStyle}>수정</div>;
+    return <div style={buttonStyle}>{props.children}</div>;
 }
 
 export { Button };
