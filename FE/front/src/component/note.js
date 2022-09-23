@@ -1,15 +1,24 @@
-import { useState, useEffect, useRef, useReducer, useCallback } from "react";
+import {
+    useState,
+    useEffect,
+    useRef,
+    useReducer,
+    useCallback,
+    useMemo,
+} from "react";
 import { Button } from "./button";
 import NoteNameTag from "./changeName";
 
-const POSITION = { x: 0, y: 0 };
+const POSITION = { x: 650, y: 0 };
 
 function buttonReducer(state, action) {
     switch (action.type) {
+        case "no-button":
+            return <></>;
         case "edit":
-            return <div>수정버튼임시잠금</div>;
+            return <Button buttonstart={50}>수정버튼임시잠금</Button>;
         case "remove":
-            return <div>삭제</div>;
+            return <Button buttonstart={650}>삭제</Button>;
         default:
             throw new Error();
     }
@@ -17,50 +26,46 @@ function buttonReducer(state, action) {
 
 export default function Note(props) {
     const [mouseTragger, setMouseTragger] = useState({
-        isDragging: false,
+        turnTragger: false,
         origin: POSITION,
         translation: POSITION,
     });
-    const [longPressTriggered, setLongPressTriggered] = useState(true);
+    const [longPressTriggered, setLongPressTriggered] = useState(false);
     const timerRef = useRef(null);
     const [noteState, dispatch] = useReducer(buttonReducer, null);
 
-    const startMouseTragger = useCallback(({ clientX, clientY }) => {
-        const origin = { x: clientX, y: clientY };
-        setMouseTragger((mouseTragger) => ({
-            ...mouseTragger,
-            origin,
-            isDragging: true,
-        }));
-    }, []);
+    const startMouseTragger = useCallback(
+        ({ clientX, clientY }) => {
+            // const origin = { x: clientX, y: clientY };
+            setMouseTragger((mouseTragger) => ({
+                ...mouseTragger,
+                // origin,
+                turnTragger: true,
+            }));
+        },
+        [mouseTragger.turnTragger]
+    );
 
     const handleMouseTragger = useCallback(({ clientX, clientY }) => {
-        const editDistance = clientX - mouseTragger.origin.x;
-        const removeDIstance = mouseTragger.origin.x - clientX;
-        if (editDistance > 100) {
-            dispatch({ type: "edit" });
-            setLongPressTriggered(true);
-        } else if (removeDIstance > 100) {
+        const distance = clientX - mouseTragger.origin.x;
+        if (clientX > 400 && distance < -200 && longPressTriggered === false) {
             dispatch({ type: "remove" });
         }
-        const mouseMovePosition = {
-            x: clientX,
-            y: 0,
-        };
-        // console.log(clientX);
-        // console.log(mouseMovePosition.x);
-        setMouseTragger((mouseTragger) => ({
-            ...mouseTragger,
-            translation: mouseMovePosition,
-        }));
+        // const mouseMovePosition = {
+        //     x: clientX,
+        //     y: 0,
+        // };
+        // setMouseTragger((mouseTragger) => ({
+        //     ...mouseTragger,
+        //     translation: mouseMovePosition,
+        // }));
     }, []);
 
     const stopMouseTragger = useCallback(() => {
         setMouseTragger((mouseTragger) => ({
             ...mouseTragger,
-            isDragging: false,
+            turnTragger: false,
         }));
-        console.log("mouse tragging stoped");
     }, []);
 
     const pressTimer = () => {
@@ -68,10 +73,12 @@ export default function Note(props) {
         if (longPressTriggered === true) {
             timerRef.current = setTimeout(() => {
                 setLongPressTriggered(false);
+                dispatch({ type: "no-button" });
             }, 1000);
         } else if (longPressTriggered === false) {
             timerRef.current = setTimeout(() => {
                 setLongPressTriggered(true);
+                dispatch({ type: "no-button" });
             }, 1000);
         }
     };
@@ -85,18 +92,34 @@ export default function Note(props) {
     };
 
     useEffect(() => {
-        if (mouseTragger.isDragging === true) {
+        if (mouseTragger.turnTragger === true) {
             pressTimer();
             window.addEventListener("mousemove", handleMouseTragger);
             window.addEventListener("mouseup", stopMouseTragger);
-            window.addEventListener("mouseleave", stopMouseTragger); // mouseleave does not work
-        } else if (mouseTragger.isDragging === false) {
+        } else if (mouseTragger.turnTragger === false) {
             window.removeEventListener("mousemove", handleMouseTragger);
+            window.removeEventListener("mouseup", stopMouseTragger);
         }
-    }, [mouseTragger.isDragging, handleMouseTragger, stopMouseTragger]);
+    }, [
+        longPressTriggered,
+        mouseTragger.turnTragger,
+        handleMouseTragger,
+        stopMouseTragger,
+    ]);
+
+    const noteStyle = {
+        width: "725px",
+        height: "100px",
+        background: longPressTriggered ? "#CCD5AE" : "#E9EDC9",
+        display: "flex",
+        alignItems: "center",
+        borderRadius: "25px",
+        padding: "0 0 0 25px",
+    };
 
     return (
         <li
+            style={noteStyle}
             key={props}
             className="note"
             onMouseDown={startMouseTragger}

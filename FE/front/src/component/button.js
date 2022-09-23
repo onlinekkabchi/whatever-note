@@ -1,13 +1,12 @@
-import { Children, useCallback, useEffect, useState } from "react";
+import { Children, useCallback, useEffect, useReducer, useState } from "react";
 
 function Button(props) {
     const [mousePosition, setMousePosition] = useState({
-        translation: { x: 120, y: 0 },
+        translation: { x: props.buttonstart, y: 0 },
     });
 
     const handleMouseMovePosition = useCallback((event) => {
-        const newFormation = { x: event.clientX - 50, y: 0 };
-        console.log(newFormation);
+        const newFormation = { x: event.clientX - 150, y: 0 };
         setMousePosition((mousePosition) => ({
             ...mousePosition,
             translation: newFormation,
@@ -27,15 +26,19 @@ function Button(props) {
     // https://dev.to/marcostreng/how-to-really-remove-eventlisteners-in-react-3och
 
     const buttonStyle = {
-        background: "#CCD5AE",
         height: "100px",
         width: "200px",
+
+        background: "#CCD5AE",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         cursor: "-webkit-grabbing",
         transform: `translate(${mousePosition.translation.x}px, ${mousePosition.translation.y}px)`,
-
         transition: "transform 50ms",
         position: "absolute",
         zIndex: 1,
+        borderRadius: "25px",
     };
 
     return <div style={buttonStyle}>{props.children}</div>;

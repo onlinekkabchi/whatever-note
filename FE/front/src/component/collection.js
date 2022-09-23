@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import Note from "./note";
 import Draggable from "./draggable";
+import { Button } from "./button";
 
 export default function Collection() {
     const [newNoteName, setNewNoteName] = useState("");
     const [notes, setNote] = useState([]);
-
-    const openNoteNameLabel = () => {
-        console.log("hi");
-    };
 
     const handleChange = (event) => {
         setNewNoteName(event.target.value);
@@ -19,6 +16,7 @@ export default function Collection() {
         const newNote = {
             name: newNoteName,
             id: newId,
+            removeSignal: "note",
         };
         if (!notes) {
             setNote([newNote]);
@@ -27,14 +25,17 @@ export default function Collection() {
         }
     };
 
-    useEffect(() => {});
+    const removeNote = () => {
+        notes.filter((each) => each.removeSignal === "remove-note");
+    };
+
+    useEffect(() => {
+        removeNote();
+    }, [notes]);
 
     return (
         <>
-            <div
-                className="note note-name-label"
-                onMouseDown={openNoteNameLabel}
-            >
+            <div className="note note-name-label">
                 {" "}
                 <input
                     type="text"
@@ -53,7 +54,13 @@ export default function Collection() {
                 aria-labelledby="list-heading"
             >
                 {notes.map((e) => {
-                    return <Note key={e.id} name={e.name} />;
+                    return (
+                        <Note
+                            key={e.id}
+                            name={e.name}
+                            removeSignal={e.removeSignal}
+                        />
+                    );
                 })}
             </ul>
         </>

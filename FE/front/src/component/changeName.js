@@ -1,5 +1,13 @@
 import { useState } from "react";
 
+const inputstyle = {
+    width: "100%",
+    height: "100%",
+    border: "none",
+    outline: "none",
+    background: "transparent",
+};
+
 export default function NoteNameTag(props) {
     const [noteName, setNoteName] = useState(<>{props.initialnotename}</>);
     const [newNoteName, setNewNoteName] = useState("");
@@ -12,16 +20,14 @@ export default function NoteNameTag(props) {
     };
 
     const writeNewNoteName = (
-        <div className="collection--input-box">
-            <input
-                type="text"
-                className="collection--input--naming"
-                name="text"
-                onChange={handleChange}
-                value={newNoteName}
-            />
-        </div>
+        <input
+            style={inputstyle}
+            type="text"
+            name="text"
+            onChange={handleChange}
+            value={newNoteName}
+        />
     );
 
-    return <>{props.nameTag ? <>{noteName}</> : <>{writeNewNoteName}</>}</>;
+    return <>{props.nameTag ? <>{writeNewNoteName}</> : <>{noteName}</>}</>;
 }
