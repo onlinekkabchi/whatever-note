@@ -1,6 +1,6 @@
 import { useEffect, useState, createContext } from "react";
 import styled from "styled-components";
-import Note from "./note";
+import { Note, WebNote } from "./note";
 
 const InputBox = styled.div`
     position: absolute;
@@ -48,7 +48,12 @@ export default function Collection() {
 
     const writeNoteList = notes.map((e) => {
         return (
-            <Note key={e.id} id={e.id} name={e.name} removeNote={removeNote} />
+            <WebNote
+                key={e.id}
+                id={e.id}
+                name={e.name}
+                removeNote={removeNote}
+            />
         );
     });
 

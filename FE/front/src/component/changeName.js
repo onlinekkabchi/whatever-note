@@ -24,6 +24,7 @@ export default function NoteNameTag(props) {
             style={inputstyle}
             type="text"
             name="text"
+            onChange={handleChange}
             onKeyUp={handleChange}
             value={newNoteName}
         />
