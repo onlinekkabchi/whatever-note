@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
+import styled from "styled-components";
 import Note from "./note";
-import Draggable from "./draggable";
-import { Button } from "./button";
+
+const InputBox = styled.div`
+    position: absolute;
+    top: 10px;
+`;
+const CollectionList = styled.div`
+    background: #f6f6f6;
+    position: absolute;
+    top: 150px;
+`;
 
 export default function Collection() {
     const [newNoteName, setNewNoteName] = useState("");
-    const [notes, setNote] = useState([]);
+    const [notes, setNotes] = useState([]);
 
     const handleChange = (event) => {
         setNewNoteName(event.target.value);
@@ -16,27 +25,37 @@ export default function Collection() {
         const newNote = {
             name: newNoteName,
             id: newId,
-            removeSignal: "note",
         };
         if (!notes) {
-            setNote([newNote]);
+            setNotes([newNote]);
         } else {
-            setNote([...notes, newNote]);
+            setNotes([...notes, newNote]);
         }
     };
 
-    const removeNote = () => {
-        notes.filter((each) => each.removeSignal === "remove-note");
+    const removeNote = (noteId) => {
+        const preNotes = [...notes];
+        let newNotes = [];
+        preNotes.map((each) => {
+            each.id !== noteId ? newNotes.push(each) : console.log(each);
+        });
+
+        // newNotes.filter((each) => each.id !== noteId);
+        console.log(newNotes);
+        console.log(preNotes);
+        return setNotes(newNotes);
     };
 
-    useEffect(() => {
-        removeNote();
-    }, [notes]);
+    const writeNoteList = notes.map((e) => {
+        return (
+            <Note key={e.id} id={e.id} name={e.name} removeNote={removeNote} />
+        );
+    });
 
     return (
         <>
-            <div className="note note-name-label">
-                {" "}
+            <InputBox>
+                <p>아무단어장</p>
                 <input
                     type="text"
                     className="collection--input--naming"
@@ -47,22 +66,15 @@ export default function Collection() {
                 <button type="submit" className="input-btn" onClick={addNote}>
                     add
                 </button>
-            </div>
-            <ul
-                role="list"
-                className="note-collection stack-large"
-                aria-labelledby="list-heading"
-            >
-                {notes.map((e) => {
-                    return (
-                        <Note
-                            key={e.id}
-                            name={e.name}
-                            removeSignal={e.removeSignal}
-                        />
-                    );
-                })}
-            </ul>
+                <button
+                    onClick={() => {
+                        console.log(notes);
+                    }}
+                >
+                    check
+                </button>
+            </InputBox>
+            <CollectionList>{writeNoteList}</CollectionList>
         </>
     );
 }

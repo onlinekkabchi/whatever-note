@@ -28,14 +28,13 @@ function Button(props) {
     const buttonStyle = {
         height: "100px",
         width: "200px",
-
         background: "#CCD5AE",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         cursor: "-webkit-grabbing",
         transform: `translate(${mousePosition.translation.x}px, ${mousePosition.translation.y}px)`,
-        transition: "transform 50ms",
+        transition: "transform 60ms",
         position: "absolute",
         zIndex: 1,
         borderRadius: "25px",

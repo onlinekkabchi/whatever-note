@@ -28,40 +28,43 @@ export default function Note(props) {
     const [mouseTragger, setMouseTragger] = useState({
         turnTragger: false,
         origin: POSITION,
-        translation: POSITION,
     });
     const [longPressTriggered, setLongPressTriggered] = useState(false);
     const timerRef = useRef(null);
     const [noteState, dispatch] = useReducer(buttonReducer, null);
 
-    const startMouseTragger = useCallback(
-        ({ clientX, clientY }) => {
-            // const origin = { x: clientX, y: clientY };
-            setMouseTragger((mouseTragger) => ({
-                ...mouseTragger,
-                // origin,
-                turnTragger: true,
-            }));
-        },
-        [mouseTragger.turnTragger]
-    );
-
-    const handleMouseTragger = useCallback(({ clientX, clientY }) => {
-        const distance = clientX - mouseTragger.origin.x;
-        if (clientX > 400 && distance < -200 && longPressTriggered === false) {
-            dispatch({ type: "remove" });
+    const startMouseTragger = (event) => {
+        switch (event.detail) {
+            case 1: {
+                pressTimer();
+                setMouseTragger((mouseTragger) => ({
+                    ...mouseTragger,
+                    turnTragger: true,
+                }));
+                break;
+            }
+            case 2: {
+                console.log("double click!");
+                break;
+            }
+            default:
+                break;
         }
-        // const mouseMovePosition = {
-        //     x: clientX,
-        //     y: 0,
-        // };
-        // setMouseTragger((mouseTragger) => ({
-        //     ...mouseTragger,
-        //     translation: mouseMovePosition,
-        // }));
+    };
+
+    const handleMouseTragger = useCallback(({ clientX, movementX }) => {
+        // console.log(clientX);
+        // console.log(movementX);
+        if (movementX < -2) {
+            dispatch({ type: "remove" });
+            if (movementX < -2 && clientX < 300) {
+                props.removeNote(props.id);
+            }
+        }
     }, []);
 
     const stopMouseTragger = useCallback(() => {
+        dispatch({ type: "no-button" });
         setMouseTragger((mouseTragger) => ({
             ...mouseTragger,
             turnTragger: false,
@@ -70,17 +73,13 @@ export default function Note(props) {
 
     const pressTimer = () => {
         console.log("presstimer");
-        if (longPressTriggered === true) {
-            timerRef.current = setTimeout(() => {
-                setLongPressTriggered(false);
-                dispatch({ type: "no-button" });
-            }, 1000);
-        } else if (longPressTriggered === false) {
-            timerRef.current = setTimeout(() => {
-                setLongPressTriggered(true);
-                dispatch({ type: "no-button" });
-            }, 1000);
-        }
+        timerRef.current = setTimeout(() => {
+            console.log("presstimer inside");
+            longPressTriggered
+                ? setLongPressTriggered(false)
+                : setLongPressTriggered(true);
+            dispatch({ type: "no-button" });
+        }, 1000);
     };
 
     const removePressTimer = () => {
@@ -93,19 +92,12 @@ export default function Note(props) {
 
     useEffect(() => {
         if (mouseTragger.turnTragger === true) {
-            pressTimer();
             window.addEventListener("mousemove", handleMouseTragger);
             window.addEventListener("mouseup", stopMouseTragger);
         } else if (mouseTragger.turnTragger === false) {
             window.removeEventListener("mousemove", handleMouseTragger);
-            window.removeEventListener("mouseup", stopMouseTragger);
         }
-    }, [
-        longPressTriggered,
-        mouseTragger.turnTragger,
-        handleMouseTragger,
-        stopMouseTragger,
-    ]);
+    }, [mouseTragger.turnTragger, handleMouseTragger, stopMouseTragger]);
 
     const noteStyle = {
         width: "725px",
@@ -115,6 +107,7 @@ export default function Note(props) {
         alignItems: "center",
         borderRadius: "25px",
         padding: "0 0 0 25px",
+        marginBottom: "25px",
     };
 
     return (
@@ -131,6 +124,9 @@ export default function Note(props) {
                 initialnotename={props.name}
             />
             {noteState}
+            {/* <button key={props} onClick={() => removethisnote(props.id)}>
+                remove
+            </button> */}
         </li>
     );
 }

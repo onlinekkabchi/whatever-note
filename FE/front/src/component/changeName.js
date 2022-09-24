@@ -9,11 +9,11 @@ const inputstyle = {
 };
 
 export default function NoteNameTag(props) {
-    const [noteName, setNoteName] = useState(<>{props.initialnotename}</>);
-    const [newNoteName, setNewNoteName] = useState("");
+    const [noteName, setNoteName] = useState(`${props.initialnotename}`);
+    const [newNoteName, setNewNoteName] = useState(`${props.initialnotename}`);
 
-    const handleChange = (event) => {
-        setNewNoteName(event.target.value);
+    const handleChange = (e) => {
+        setNewNoteName(e.target.value);
         if (props.decidedNewName) {
             setNoteName(newNoteName);
         }
@@ -24,7 +24,7 @@ export default function NoteNameTag(props) {
             style={inputstyle}
             type="text"
             name="text"
-            onChange={handleChange}
+            onKeyUp={handleChange}
             value={newNoteName}
         />
     );
