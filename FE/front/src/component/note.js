@@ -1,15 +1,6 @@
-import {
-    useState,
-    useEffect,
-    useRef,
-    useReducer,
-    useCallback,
-    useMemo,
-} from "react";
+import { useState, useRef, useReducer } from "react";
 import { Button, WebButton } from "./button";
 import NoteNameTag from "./changeName";
-
-const POSITION = { x: 650, y: 0 };
 
 function buttonReducer(state, action) {
     switch (action.type) {
@@ -23,10 +14,6 @@ function buttonReducer(state, action) {
 }
 
 function Note(props) {
-    const [mouseTragger, setMouseTragger] = useState({
-        turnTragger: false,
-        origin: POSITION,
-    });
     const [longPressTriggered, setLongPressTriggered] = useState(false);
     const timerRef = useRef(null);
     const [noteState, dispatch] = useReducer(buttonReducer, null);
@@ -35,10 +22,6 @@ function Note(props) {
         switch (event.detail) {
             case 1: {
                 pressTimer();
-                setMouseTragger((mouseTragger) => ({
-                    ...mouseTragger,
-                    turnTragger: true,
-                }));
                 break;
             }
             case 2: {

@@ -1,13 +1,13 @@
-import { useEffect, useState, createContext } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { Note, WebNote } from "./note";
+import { WebNote } from "./note";
 
 const InputBox = styled.div`
     position: absolute;
     top: 10px;
 `;
 const CollectionList = styled.div`
-    background: #f6f6f6;
+    background: #fffdee;
     position: absolute;
     top: 150px;
 `;
@@ -40,7 +40,6 @@ export default function Collection() {
             each.id !== noteId ? newNotes.push(each) : console.log(each);
         });
 
-        // newNotes.filter((each) => each.id !== noteId);
         console.log(newNotes);
         console.log(preNotes);
         return setNotes(newNotes);
