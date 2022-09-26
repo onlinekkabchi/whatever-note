@@ -1,84 +1,107 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { WebNote } from "./note";
+import { Outlet } from "react-router-dom";
+import { NoteContext } from "../App";
+
+const CollectionContainer = styled.div`
+    display: flex;
+`;
 
 const InputBox = styled.div`
-    position: absolute;
-    top: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
 `;
-const CollectionList = styled.div`
+const NoteList = styled.div`
     background: #fffdee;
+    // margin: 100px;
+    z-index: 1;
     position: absolute;
-    top: 150px;
+    left: 550px;
+    border: 1px solid #000000;
 `;
+
+export function collectionReducer(state, action) {
+    switch (action.type) {
+        case "ADD_NOTE":
+            const newId = `${Math.floor(Math.random() * 100)}${state.length}`;
+            return [...state, { name: action.name, id: newId }];
+        case "CHANGE_NOTE_NAME":
+            state.forEach((item) =>
+                item.id === action.id ? (item.name = action.name) : item
+            );
+            return state;
+        case "REMOVE_NOTE":
+            const newArr = state.filter((item) => item.id !== action.id);
+            state = newArr;
+            return state;
+        default:
+            return state;
+    }
+}
 
 export default function Collection() {
     const [newNoteName, setNewNoteName] = useState("");
-    const [notes, setNotes] = useState([]);
+    const { noteData, dispatch } = useContext(NoteContext);
 
     const handleChange = (event) => {
         setNewNoteName(event.target.value);
     };
 
     const addNote = () => {
-        const newId = `${notes.length}${Math.floor(Math.random() * 100)}`; // 리스트에 키값 부여하는 문제 더 생각해보기
-        const newNote = {
-            name: newNoteName,
-            id: newId,
-        };
-        if (!notes) {
-            setNotes([newNote]);
-        } else {
-            setNotes([...notes, newNote]);
-        }
+        dispatch({ type: "ADD_NOTE", name: newNoteName });
+    };
+
+    const changeName = (newName, noteId) => {
+        dispatch({
+            type: "CHANGE_NOTE_NAME",
+            name: newName,
+            id: noteId,
+        });
     };
 
     const removeNote = (noteId) => {
-        const preNotes = [...notes];
-        let newNotes = [];
-        preNotes.map((each) => {
-            each.id !== noteId ? newNotes.push(each) : console.log(each);
-        });
-
-        console.log(newNotes);
-        console.log(preNotes);
-        return setNotes(newNotes);
+        dispatch({ type: "REMOVE_NOTE", id: noteId });
     };
-
-    const writeNoteList = notes.map((e) => {
-        return (
-            <WebNote
-                key={e.id}
-                id={e.id}
-                name={e.name}
-                removeNote={removeNote}
-            />
-        );
-    });
 
     return (
         <>
-            <InputBox>
-                <p>아무단어장</p>
-                <input
-                    type="text"
-                    className="collection--input--naming"
-                    name="text"
-                    onChange={handleChange}
-                    value={newNoteName}
-                />
-                <button type="submit" className="input-btn" onClick={addNote}>
-                    add
-                </button>
-                <button
-                    onClick={() => {
-                        console.log(notes);
-                    }}
-                >
-                    check
-                </button>
-            </InputBox>
-            <CollectionList>{writeNoteList}</CollectionList>
+            <CollectionContainer>
+                <NoteList>
+                    <InputBox>
+                        <p>아무단어장</p>
+                        <input
+                            type="text"
+                            className="collection--input--naming"
+                            name="text"
+                            onChange={handleChange}
+                            value={newNoteName}
+                        />
+                        <button onClick={addNote}>add</button>
+                        <button
+                            onClick={() => {
+                                console.log(noteData);
+                            }}
+                        >
+                            check
+                        </button>
+                    </InputBox>
+                    {noteData.map((e) => {
+                        return (
+                            <WebNote
+                                key={e.id}
+                                id={e.id}
+                                name={e.name}
+                                removeNote={removeNote}
+                                changeName={changeName}
+                            />
+                        );
+                    })}
+                </NoteList>
+                <Outlet />
+            </CollectionContainer>
         </>
     );
 }

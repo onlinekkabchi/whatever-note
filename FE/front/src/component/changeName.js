@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 const inputstyle = {
     width: "100%",
     height: "100%",
@@ -16,19 +15,24 @@ export default function NoteNameTag(props) {
         setNewNoteName(e.target.value);
         if (props.decidedNewName) {
             setNoteName(newNoteName);
+            props.changeName(newNoteName, props.id);
         }
     };
 
-    const writeNewNoteName = (
-        <input
-            style={inputstyle}
-            type="text"
-            name="text"
-            onChange={handleChange}
-            onKeyUp={handleChange}
-            value={newNoteName}
-        />
+    return (
+        <>
+            {props.nameTag ? (
+                <input
+                    style={inputstyle}
+                    type="text"
+                    name="text"
+                    onChange={handleChange}
+                    onKeyUp={handleChange}
+                    value={newNoteName}
+                />
+            ) : (
+                <>{noteName}</>
+            )}
+        </>
     );
-
-    return <>{props.nameTag ? <>{writeNewNoteName}</> : <>{noteName}</>}</>;
 }
