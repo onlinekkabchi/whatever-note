@@ -1,8 +1,7 @@
-import { createContext, useReducer, useState } from "react";
-import "./style/style.css";
+import { createContext, useReducer } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Collection from "./component/collection";
-import { collectionReducer } from "./component/collection";
+import collectionReducer from "./component/collectionReducer";
 import NoteInsider from "./component/noteInsider";
 
 export const NoteContext = createContext();
@@ -37,9 +36,11 @@ function App() {
 
     return (
         <>
-            <NoteContext.Provider value={{ noteData, dispatch }}>
-                <RouterProvider router={router} />
-            </NoteContext.Provider>
+            <div className="App">
+                <NoteContext.Provider value={{ noteData, dispatch }}>
+                    <RouterProvider router={router} />
+                </NoteContext.Provider>
+            </div>
         </>
     );
 }

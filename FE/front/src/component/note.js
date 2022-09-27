@@ -1,25 +1,41 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import { WebButton } from "./button";
-import NoteNameTag from "./changeName";
+import { useState, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./styled-component/button";
+import NoteNameTag from "./noteNameTag";
+import { NoteContext } from "../App";
+import styled from "styled-components";
+
+const NoteContainer = styled.li`
+    width: 725px;
+    height: 100px;
+    background: ${(props) =>
+        props.longPressTriggered ? "#CCD5AE" : "#E9EDC9"};
+    display: flex;
+    align-items: center;
+    border-radius: 25px;
+    padding: 0 0 0 25px;
+    margin-bottom: 25px;
+`;
 
 function WebNote(props) {
     const [longPressTriggered, setLongPressTriggered] = useState(false);
     const timerRef = useRef(null);
-    const [showWebButton, setShowWebButton] = useState("hidden");
+    const [buttonState, showButton] = useState("hidden");
+    const { dispatch } = useContext(NoteContext);
+    const navigate = useNavigate();
 
     const startMouseTragger = (event) => {
         switch (event.detail) {
             case 1: {
                 pressTimer();
+                navigate(`${props.id}`);
                 break;
             }
             case 2: {
-                setShowWebButton("visible");
+                showButton("visible");
                 setTimeout(() => {
-                    setShowWebButton("hidden");
+                    showButton("hidden");
                 }, 5000);
-                console.log("double click!");
                 break;
             }
             default:
@@ -46,61 +62,31 @@ function WebNote(props) {
     };
 
     const removeThisNote = () => {
-        props.removeNote(props.id);
-    };
-
-    const noteStyle = {
-        width: "725px",
-        height: "100px",
-        background: longPressTriggered ? "#CCD5AE" : "#E9EDC9",
-        display: "flex",
-        alignItems: "center",
-        borderRadius: "25px",
-        padding: "0 0 0 25px",
-        marginBottom: "25px",
+        navigate("/");
+        dispatch({ type: "REMOVE_NOTE", id: props.id });
     };
 
     return (
-        <li
-            style={noteStyle}
-            key={props.id}
-            className="note"
-            onMouseDown={startMouseTragger}
-            onMouseUp={removePressTimer}
-        >
-            {longPressTriggered ? (
+        <>
+            <NoteContainer
+                key={props.id}
+                onMouseDown={startMouseTragger}
+                onMouseUp={removePressTimer}
+                longPressTriggered={longPressTriggered}
+            >
                 <NoteNameTag
-                    decidedNewName={true}
-                    nameTag={longPressTriggered}
-                    initialnotename={props.name}
-                    id={props.id}
-                    changeName={props.changeName}
+                    name={props.name}
+                    longPressTriggered={longPressTriggered}
                 />
-            ) : (
-                <>
-                    <Link
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            border: "1px solid",
-                            textDecoration: "none",
-                        }}
-                        to={props.id}
-                    >
-                        {props.name}
-                    </Link>
-                    <WebButton
-                        showWebButtonTag={showWebButton}
-                        buttonStartPosition={"550px"}
-                        removeThisNote={removeThisNote}
-                    >
-                        이 삭제버튼은 5초 후 사라집니다. 짜잔.
-                    </WebButton>
-                </>
-            )}
-        </li>
+                <Button
+                    buttonStartPosition={"550px"}
+                    showButton={buttonState}
+                    onClick={removeThisNote}
+                >
+                    이 버튼은 5초후 사라집니다
+                </Button>
+            </NoteContainer>
+        </>
     );
 }
 

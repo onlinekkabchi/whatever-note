@@ -8,20 +8,20 @@ const inputstyle = {
 };
 
 export default function NoteNameTag(props) {
-    const [noteName, setNoteName] = useState(`${props.initialnotename}`);
-    const [newNoteName, setNewNoteName] = useState(`${props.initialnotename}`);
+    const [noteName, setNoteName] = useState(`${props.name}`);
+    const [newNoteName, setNewNoteName] = useState(`${props.name}`);
 
     const handleChange = (e) => {
         setNewNoteName(e.target.value);
-        if (props.decidedNewName) {
+        if (e.target.value.length > 0) {
             setNoteName(newNoteName);
-            props.changeName(newNoteName, props.id);
+            props.changeName(noteName, props.id);
         }
     };
 
     return (
         <>
-            {props.nameTag ? (
+            {props.longPressTriggered ? (
                 <input
                     style={inputstyle}
                     type="text"

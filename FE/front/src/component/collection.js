@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { WebNote } from "./note";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { NoteContext } from "../App";
 
 const CollectionContainer = styled.div`
@@ -14,6 +14,7 @@ const InputBox = styled.div`
     flex-direction: column;
     margin: 15px;
 `;
+
 const NoteList = styled.div`
     background: #fffdee;
     // margin: 100px;
@@ -22,25 +23,6 @@ const NoteList = styled.div`
     left: 550px;
     border: 1px solid #000000;
 `;
-
-export function collectionReducer(state, action) {
-    switch (action.type) {
-        case "ADD_NOTE":
-            const newId = `${Math.floor(Math.random() * 100)}${state.length}`;
-            return [...state, { name: action.name, id: newId }];
-        case "CHANGE_NOTE_NAME":
-            state.forEach((item) =>
-                item.id === action.id ? (item.name = action.name) : item
-            );
-            return state;
-        case "REMOVE_NOTE":
-            const newArr = state.filter((item) => item.id !== action.id);
-            state = newArr;
-            return state;
-        default:
-            return state;
-    }
-}
 
 export default function Collection() {
     const [newNoteName, setNewNoteName] = useState("");
@@ -51,7 +33,12 @@ export default function Collection() {
     };
 
     const addNote = () => {
-        dispatch({ type: "ADD_NOTE", name: newNoteName });
+        console.log(noteData);
+        if (newNoteName.length > 0) {
+            dispatch({ type: "ADD_NOTE", name: newNoteName });
+            setNewNoteName("");
+        }
+        return;
     };
 
     const changeName = (newName, noteId) => {
@@ -62,16 +49,14 @@ export default function Collection() {
         });
     };
 
-    const removeNote = (noteId) => {
-        dispatch({ type: "REMOVE_NOTE", id: noteId });
-    };
-
     return (
         <>
             <CollectionContainer>
                 <NoteList>
                     <InputBox>
-                        <p>아무단어장</p>
+                        <Link to="/">
+                            <p>아무단어장(Home)</p>
+                        </Link>
                         <input
                             type="text"
                             className="collection--input--naming"
@@ -94,7 +79,6 @@ export default function Collection() {
                                 key={e.id}
                                 id={e.id}
                                 name={e.name}
-                                removeNote={removeNote}
                                 changeName={changeName}
                             />
                         );
