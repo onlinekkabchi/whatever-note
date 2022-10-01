@@ -1,9 +1,8 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./styled-component/button";
 import NoteNameTag from "./noteNameTag";
-import { NoteContext } from "../App";
 import styled from "styled-components";
+import { useNoteDispatch } from "../noteContext";
 
 const NoteContainer = styled.li`
     width: 725px;
@@ -17,11 +16,26 @@ const NoteContainer = styled.li`
     margin-bottom: 25px;
 `;
 
-function WebNote(props) {
+const Button = styled.div`
+    height: 100px;
+    width: 200px;
+    background: #ccd5ae;
+    display: flex;
+    alignitems: center;
+    justify-content: center;
+    cursor: -webkit-grabbing;
+    position: absolute;
+    border-radius: 25px;
+    font-size: 18px;
+    left: ${(props) => props.buttonStartPosition};
+    visibility: ${(props) => props.showButton};
+`;
+
+export default function Note(props) {
     const [longPressTriggered, setLongPressTriggered] = useState(false);
     const timerRef = useRef(null);
     const [buttonState, showButton] = useState("hidden");
-    const { dispatch } = useContext(NoteContext);
+    const dispatch = useNoteDispatch();
     const navigate = useNavigate();
 
     const startMouseTragger = (event) => {
@@ -61,7 +75,7 @@ function WebNote(props) {
         }
     };
 
-    const removeThisNote = () => {
+    const removeNote = () => {
         navigate("/");
         dispatch({ type: "REMOVE_NOTE", id: props.id });
     };
@@ -76,12 +90,13 @@ function WebNote(props) {
             >
                 <NoteNameTag
                     name={props.name}
+                    id={props.id}
                     longPressTriggered={longPressTriggered}
                 />
                 <Button
                     buttonStartPosition={"550px"}
                     showButton={buttonState}
-                    onClick={removeThisNote}
+                    onClick={removeNote}
                 >
                     이 버튼은 5초후 사라집니다
                 </Button>
@@ -89,5 +104,3 @@ function WebNote(props) {
         </>
     );
 }
-
-export { WebNote };

@@ -1,32 +1,18 @@
-import { createContext, useReducer } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Collection from "./component/collection";
-import collectionReducer from "./component/collectionReducer";
+import NoteCollection from "./component/noteCollection";
 import NoteInsider from "./component/noteInsider";
-
-export const NoteContext = createContext();
-const InitialData = [{ name: "sample note!", id: "2345888" }];
+import { NoteProvider, useNoteState } from "./noteContext";
 
 function App() {
-    const [noteData, dispatch] = useReducer(collectionReducer, InitialData);
-
-    const findNote = (noteId) => {
-        const result = noteData.filter((e) => (e.id === noteId ? e : false));
-        return result[0];
-    };
-
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Collection />,
-            loader: () => {
-                return InitialData;
-            },
+            element: <NoteCollection />,
             children: [
                 {
                     path: "/:id",
-                    loader: ({ params }) => {
-                        return findNote(params.id);
+                    loader: (e) => {
+                        return e;
                     },
                     element: <NoteInsider />,
                 },
@@ -37,9 +23,9 @@ function App() {
     return (
         <>
             <div className="App">
-                <NoteContext.Provider value={{ noteData, dispatch }}>
+                <NoteProvider>
                     <RouterProvider router={router} />
-                </NoteContext.Provider>
+                </NoteProvider>
             </div>
         </>
     );

@@ -1,8 +1,8 @@
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { WebNote } from "./note";
+import { useNoteDispatch, useNoteState } from "../noteContext";
+import Note from "./note";
 import { Link, Outlet } from "react-router-dom";
-import { NoteContext } from "../App";
 
 const CollectionContainer = styled.div`
     display: flex;
@@ -15,44 +15,35 @@ const InputBox = styled.div`
     margin: 15px;
 `;
 
-const NoteList = styled.div`
+const CardList = styled.div`
     background: #fffdee;
     // margin: 100px;
     z-index: 1;
     position: absolute;
-    left: 550px;
+    left: 900px;
     border: 1px solid #000000;
 `;
 
-export default function Collection() {
+export default function NoteCollection() {
+    const notes = useNoteState();
+    const dispatch = useNoteDispatch();
     const [newNoteName, setNewNoteName] = useState("");
-    const { noteData, dispatch } = useContext(NoteContext);
 
     const handleChange = (event) => {
         setNewNoteName(event.target.value);
     };
 
     const addNote = () => {
-        console.log(noteData);
         if (newNoteName.length > 0) {
             dispatch({ type: "ADD_NOTE", name: newNoteName });
             setNewNoteName("");
         }
         return;
     };
-
-    const changeName = (newName, noteId) => {
-        dispatch({
-            type: "CHANGE_NOTE_NAME",
-            name: newName,
-            id: noteId,
-        });
-    };
-
     return (
         <>
             <CollectionContainer>
-                <NoteList>
+                <CardList>
                     <InputBox>
                         <Link to="/">
                             <p>아무단어장(Home)</p>
@@ -67,23 +58,18 @@ export default function Collection() {
                         <button onClick={addNote}>add</button>
                         <button
                             onClick={() => {
-                                console.log(noteData);
+                                console.log(notes);
                             }}
                         >
                             check
                         </button>
                     </InputBox>
-                    {noteData.map((e) => {
+                    {notes.map((note) => {
                         return (
-                            <WebNote
-                                key={e.id}
-                                id={e.id}
-                                name={e.name}
-                                changeName={changeName}
-                            />
+                            <Note key={note.id} id={note.id} name={note.name} />
                         );
                     })}
-                </NoteList>
+                </CardList>
                 <Outlet />
             </CollectionContainer>
         </>

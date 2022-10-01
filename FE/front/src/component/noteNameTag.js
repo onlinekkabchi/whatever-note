@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNoteDispatch } from "../noteContext";
+
 const inputstyle = {
     width: "100%",
     height: "100%",
@@ -10,13 +12,16 @@ const inputstyle = {
 export default function NoteNameTag(props) {
     const [noteName, setNoteName] = useState(`${props.name}`);
     const [newNoteName, setNewNoteName] = useState(`${props.name}`);
+    const dispatch = useNoteDispatch();
 
     const handleChange = (e) => {
         setNewNoteName(e.target.value);
-        if (e.target.value.length > 0) {
-            setNoteName(newNoteName);
-            props.changeName(noteName, props.id);
-        }
+        setNoteName(newNoteName);
+        dispatch({
+            type: "CHANGE_NOTE_NAME",
+            name: noteName,
+            id: props.id,
+        });
     };
 
     return (

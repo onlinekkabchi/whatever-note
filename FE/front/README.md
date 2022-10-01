@@ -1,9 +1,4 @@
-### Library
-
--   styled-component 사용
--   scss
-
-### FE 요구사항
+## FE 요구사항
 
 1. TypeScript
 
@@ -15,3 +10,5 @@
 
 -   useReducer 필수 사용
 -   Context API 사용
+
+4. styled-component 사용
