@@ -1,29 +1,8 @@
 import { createContext, useState } from "react";
-import styled from "styled-components";
-
-const CardContainer = styled.li`
-    display: flex;
-    flex-direction: column;
-    width: 725px;
-    min-height: 100px;
-    height: auto;
-    background: #faedcd;
-    border-radius: 25px;
-    padding: 0 0 0 25px;
-    margin-bottom: 25px;
-`;
-
-const Content = styled.li`
-    width: 670px;
-    min-height: 53px;
-    background: #fffdee;
-    display: flex;
-    align-items: center;
-    border-radius: 15px;
-    padding: 0 0 0 25px;
-    margin-bottom: 25px;
-`;
-
+import {
+    Content,
+    CardContainer,
+} from "../component/styled-component/cardStyle";
 function cardReducer() {}
 
 const inputstyle = {
@@ -75,19 +54,41 @@ function CardNameTag(props) {
 export default function CardEditor(props) {
     const [longPressTriggeredForCard, setLongPressTriggeredForCard] =
         useState(false);
+    const [openCard, setOpenCard] = useState(false);
 
     const addCard = () => {};
     const changeCard = () => {};
     const removeCard = () => {};
 
+    const openContents = () => {
+        console.log("openContetns");
+        if (openCard) {
+            setOpenCard(false);
+        } else if (openCard === false) {
+            setOpenCard(true);
+        }
+    };
+
+    const contentStyle = {
+        display: `${openCard ? "block" : "none"}`,
+        width: "670px",
+        background: "#fffdee",
+        alignItems: "center",
+        borderRadius: "15px",
+        padding: "15px",
+        marginBottom: "25px",
+    };
+
     return (
-        <CardContainer>
+        <CardContainer onClick={openContents} openCard={openCard}>
             <CardNameTag
                 longPressTriggeredForCard={longPressTriggeredForCard}
                 name={props.name}
             />
-            {props.contents.map((e) => (
-                <Content>{e}</Content>
+            {props.contents.map((e, index) => (
+                <div style={contentStyle} key={index}>
+                    {e}
+                </div>
             ))}
         </CardContainer>
     );

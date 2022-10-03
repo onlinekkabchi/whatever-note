@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useNoteState } from "../noteContext";
-import CardEditor from "../hook/cardEditor";
+import CardEditor from "../editor/cardEditor";
 import { NoteTitleContainer, SearchBar } from "./styled-component/noteStyle";
 
 export default function NoteInsider() {
@@ -13,7 +13,7 @@ export default function NoteInsider() {
             style={{
                 background: "#fffdee",
                 padding: "25px",
-                left: "70px",
+                left: "150px",
                 position: "absolute",
                 // width: "auto",
                 // height: "auto",
@@ -28,16 +28,8 @@ export default function NoteInsider() {
                     <CardEditor name={crd.name} contents={crd.contents} />
                 ))
             ) : (
-                <div>카드없음</div>
+                <div>단어카드없음</div>
             )}
-            <button
-                onClick={() => {
-                    console.log(theNote);
-                }}
-            >
-                {" "}
-                내용물확인{" "}
-            </button>
         </div>
     );
 }
