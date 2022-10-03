@@ -8,12 +8,12 @@ const InitialNote = [
             {
                 name: "name",
                 card_id: "1",
-                contents: [],
+                contents: ["name1", "name2"],
             },
             {
                 name: "다른단어",
                 card_id: "2",
-                contents: [],
+                contents: ["단어1", "단어2"],
             },
         ],
     },
@@ -41,7 +41,7 @@ const NoteDispatchContext = createContext(null);
 function noteReducer(state, action) {
     switch (action.type) {
         case "ADD_NOTE":
-            const newId = `${Math.floor(Math.random() * 100)}`;
+            const newId = `${Math.floor(Math.random() * 100)}${state.length}`;
             return [...state, { name: action.name, id: newId, cards: {} }];
         case "CHANGE_NOTE_NAME":
             const noteLocation = state.findIndex(

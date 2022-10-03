@@ -1,4 +1,4 @@
-import { useState, useRef, createContext, useContext } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import NoteNameTag from "./noteNameTag";
 import styled from "styled-components";
