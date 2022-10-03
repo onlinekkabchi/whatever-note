@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext, useRef } from "react";
+import { createContext, useReducer, useContext } from "react";
 
 const InitialNote = [
     {

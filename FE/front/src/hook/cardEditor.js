@@ -1,18 +1,38 @@
 import { createContext, useState } from "react";
 import styled from "styled-components";
 
-const Content = styled.li`
-    width: 725px;
-    height: 100px;
-    background: #faedcd;
+const CardContainer = styled.li`
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    width: 725px;
+    min-height: 100px;
+    height: auto;
+    background: #faedcd;
     border-radius: 25px;
     padding: 0 0 0 25px;
     margin-bottom: 25px;
 `;
 
+const Content = styled.li`
+    width: 670px;
+    min-height: 53px;
+    background: #fffdee;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    padding: 0 0 0 25px;
+    margin-bottom: 25px;
+`;
+
 function cardReducer() {}
+
+const inputstyle = {
+    width: "100%",
+    height: "100%",
+    border: "none",
+    outline: "none",
+    background: "transparent",
+};
 
 function CardNameTag(props) {
     const [cardName, setCardName] = useState(`${props.name}`);
@@ -27,6 +47,7 @@ function CardNameTag(props) {
         <>
             {props.longPressTriggeredForCard ? (
                 <input
+                    style={inputstyle}
                     type="text"
                     name="text"
                     onChange={handleCardNameChange}
@@ -34,29 +55,40 @@ function CardNameTag(props) {
                     value={newCardName}
                 />
             ) : (
-                <>{cardName}</>
+                <div
+                    style={{
+                        display: "flex",
+                        height: "100px",
+                        alignItems: "center",
+                    }}
+                    onClick={() => {
+                        console.log("카드네임클릭 : " + cardName);
+                    }}
+                >
+                    {cardName}
+                </div>
             )}
         </>
     );
 }
 
 export default function CardEditor(props) {
-    const cardPack = createContext(null);
     const [longPressTriggeredForCard, setLongPressTriggeredForCard] =
         useState(false);
 
-    const addCard = () => {
-        console.log(cardPack);
-    };
+    const addCard = () => {};
     const changeCard = () => {};
     const removeCard = () => {};
 
     return (
-        <Content>
+        <CardContainer>
             <CardNameTag
                 longPressTriggeredForCard={longPressTriggeredForCard}
                 name={props.name}
             />
-        </Content>
+            {props.contents.map((e) => (
+                <Content>{e}</Content>
+            ))}
+        </CardContainer>
     );
 }

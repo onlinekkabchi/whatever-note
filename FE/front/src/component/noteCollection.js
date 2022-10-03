@@ -1,33 +1,18 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { useNoteDispatch, useNoteState } from "../noteContext";
 import Note from "./note";
 import { Link, Outlet } from "react-router-dom";
-
-const CollectionContainer = styled.div`
-    display: flex;
-`;
-
-const InputBox = styled.div`
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    margin: 15px;
-`;
-
-const CardList = styled.div`
-    background: #fffdee;
-    // margin: 100px;
-    z-index: 1;
-    position: absolute;
-    left: 900px;
-    border: 1px solid #000000;
-`;
+import {
+    CollectionContainer,
+    InputBox,
+    CardList,
+} from "./styled-component/collectionStyle";
 
 export default function NoteCollection() {
     const notes = useNoteState();
     const dispatch = useNoteDispatch();
     const [newNoteName, setNewNoteName] = useState("");
+    const [open, setOpen] = useState(true);
 
     const handleChange = (event) => {
         setNewNoteName(event.target.value);
@@ -40,10 +25,29 @@ export default function NoteCollection() {
         }
         return;
     };
+    const handleCollectionSlider = () => {
+        if (open === true) {
+            setOpen(false);
+        } else if (open === false) {
+            setOpen(true);
+        }
+        console.log("sliding");
+    };
     return (
         <>
             <CollectionContainer>
-                <CardList>
+                <CardList open={open}>
+                    <button
+                        onClick={handleCollectionSlider}
+                        style={{
+                            position: "absolute",
+                            marginTop: "15px",
+                            width: "100px",
+                            left: "680px",
+                        }}
+                    >
+                        slider
+                    </button>
                     <InputBox>
                         <Link to="/">
                             <p>아무단어장(Home)</p>
