@@ -1,9 +1,5 @@
-import { createContext, useState } from "react";
-import {
-    Content,
-    CardContainer,
-} from "../component/styled-component/cardStyle";
-function cardReducer() {}
+import { useState } from "react";
+import { CardContainer } from "../component/styled-component/cardStyle";
 
 const inputstyle = {
     width: "100%",
@@ -56,10 +52,6 @@ export default function CardEditor(props) {
         useState(false);
     const [openCard, setOpenCard] = useState(false);
 
-    const addCard = () => {};
-    const changeCard = () => {};
-    const removeCard = () => {};
-
     const openContents = () => {
         console.log("openContetns");
         if (openCard) {
@@ -85,6 +77,17 @@ export default function CardEditor(props) {
                 longPressTriggeredForCard={longPressTriggeredForCard}
                 name={props.name}
             />
+            <button
+                onClick={() => {
+                    if (longPressTriggeredForCard === true) {
+                        setLongPressTriggeredForCard(false);
+                    } else if (longPressTriggeredForCard === false) {
+                        setLongPressTriggeredForCard(true);
+                    }
+                }}
+            >
+                setPressTrigger
+            </button>
             {props.contents.map((e, index) => (
                 <div style={contentStyle} key={index}>
                     {e}

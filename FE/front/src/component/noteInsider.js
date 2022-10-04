@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useNoteState } from "../noteContext";
 import CardEditor from "../editor/cardEditor";
 import { NoteTitleContainer, SearchBar } from "./styled-component/noteStyle";
-import { InputBox } from "./styled-component/collectionStyle";
 
 const inputStyle = {
     background: "#fffdee",
