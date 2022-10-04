@@ -2,6 +2,14 @@ import { useParams } from "react-router-dom";
 import { useNoteState } from "../noteContext";
 import CardEditor from "../editor/cardEditor";
 import { NoteTitleContainer, SearchBar } from "./styled-component/noteStyle";
+import { InputBox } from "./styled-component/collectionStyle";
+
+const inputStyle = {
+    background: "#fffdee",
+    padding: "25px",
+    left: "800px",
+    position: "absolute",
+};
 
 export default function NoteInsider() {
     const param = useParams();
@@ -9,19 +17,20 @@ export default function NoteInsider() {
     const theNote = notes.find((note) => note.id === param.id);
 
     return (
-        <div
-            style={{
-                background: "#fffdee",
-                padding: "25px",
-                left: "150px",
-                position: "absolute",
-                // width: "auto",
-                // height: "auto",
-            }}
-        >
+        <div style={inputStyle}>
             <NoteTitleContainer>{theNote.name}</NoteTitleContainer>
             <SearchBar>
-                검색창<button>content 추가버튼</button>
+                <input
+                    style={{
+                        background: "#FFFDEE",
+                        border: "0",
+                        borderRadius: "15px",
+                        padding: "10px",
+                    }}
+                    type="text"
+                    onChange={() => {}}
+                />
+                <button>content 추가버튼</button>
             </SearchBar>
             {theNote["cards"].length > 0 ? (
                 theNote["cards"].map((crd) => (

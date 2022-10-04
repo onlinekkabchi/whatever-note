@@ -54,7 +54,6 @@ export default function NoteCollection() {
                         </Link>
                         <input
                             type="text"
-                            className="collection--input--naming"
                             name="text"
                             onChange={handleChange}
                             value={newNoteName}
