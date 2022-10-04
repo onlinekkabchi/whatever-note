@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNoteDispatch } from "../noteContext";
+import { useNoteDispatch } from "../noteContext.js";
 
 const inputstyle = {
     width: "100%",

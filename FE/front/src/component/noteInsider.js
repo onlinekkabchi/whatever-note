@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useNoteState } from "../noteContext";
-import CardEditor from "../editor/cardEditor";
-import { NoteTitleContainer, SearchBar } from "./styled-component/noteStyle";
+import { useNoteState } from "../noteContext.js";
+import CardEditor from "../editor/cardEditor.js";
+import { NoteTitleContainer, SearchBar } from "./styled-component/noteStyle.js";
 
 const inputStyle = {
     background: "#fffdee",
@@ -32,8 +32,12 @@ export default function NoteInsider() {
                 <button>content 추가버튼</button>
             </SearchBar>
             {theNote["cards"].length > 0 ? (
-                theNote["cards"].map((crd) => (
-                    <CardEditor name={crd.name} contents={crd.contents} />
+                theNote["cards"].map((crd, index) => (
+                    <CardEditor
+                        key={index}
+                        name={crd.name}
+                        contents={crd.contents}
+                    />
                 ))
             ) : (
                 <div>단어카드없음</div>

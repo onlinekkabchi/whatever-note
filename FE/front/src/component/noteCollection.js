@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { useNoteDispatch, useNoteState } from "../noteContext";
-import Note from "./note";
+import { useEffect, useState } from "react";
+import { useNoteDispatch, useNoteState } from "../noteContext.js";
+import Note from "./note.js";
 import { Link, Outlet } from "react-router-dom";
 import {
     CollectionContainer,
     InputBox,
     CardList,
-} from "./styled-component/collectionStyle";
+} from "./styled-component/collectionStyle.js";
+// import connectMongoDB from "../server/connect.js";
 
 export default function NoteCollection() {
     const notes = useNoteState();
@@ -25,6 +26,7 @@ export default function NoteCollection() {
         }
         return;
     };
+
     const handleCollectionSlider = () => {
         if (open === true) {
             setOpen(false);
@@ -33,6 +35,12 @@ export default function NoteCollection() {
         }
         console.log("sliding");
     };
+
+    useEffect(() => {
+        // const conn = connectMongoDB();
+        // console.log(conn);
+    }, []);
+
     return (
         <>
             <CollectionContainer>

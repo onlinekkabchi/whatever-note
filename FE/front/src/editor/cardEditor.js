@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardContainer } from "../component/styled-component/cardStyle";
+import { CardContainer } from "../component/styled-component/cardStyle.js";
 
 const inputstyle = {
     width: "100%",

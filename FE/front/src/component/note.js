@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import NoteNameTag from "./noteNameTag";
-import { useNoteDispatch } from "../noteContext";
-import { Button, NoteContainer } from "./styled-component/noteStyle";
+import NoteNameTag from "./noteNameTag.js";
+import { useNoteDispatch } from "../noteContext.js";
+import { Button, NoteContainer } from "./styled-component/noteStyle.js";
 
 export default function Note(props) {
     const [longPressTriggered, setLongPressTriggered] = useState(false);
