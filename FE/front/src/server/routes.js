@@ -6,5 +6,6 @@ const app = express();
 connectMongoDB();
 
 app.get("/", (req, res) => {
+    console.log("helloworld");
     res.send("Hello World!");
 });
