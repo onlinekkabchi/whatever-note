@@ -1,17 +1,16 @@
 import fs from "fs";
 import path from "path";
 import express from "express";
-import { createServer as createViteServer } from "vite";
+import cors from "cors";
 
 async function createServer() {
   const app = express();
 
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    appType: "custom",
-  });
+  app.use(cors(corsOptions));
 
-  app.use(vite.middlewares);
+  app.get("/api/v1", (req, res) => {
+    res.json({ hello: "world!!" });
+  });
 
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
