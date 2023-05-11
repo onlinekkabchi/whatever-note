@@ -10,7 +10,6 @@ function LoginEmail() {
 
   return (
     <>
-      {" "}
       {user !== null && user.hasOwnProperty("_accessToken") ? (
         <p>user logged</p>
       ) : (
