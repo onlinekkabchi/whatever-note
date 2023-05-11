@@ -50,4 +50,4 @@ yarn-error.log*
 
 
 /pages
-src/_tests
+/src/_tests

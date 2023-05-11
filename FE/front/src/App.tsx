@@ -1,35 +1,21 @@
-// import { useEffect, useState } from "react";
+import { useState } from "react";
 
-// import { Outlet, useNavigate } from "react-router-dom";
+import { app } from "./util/realm";
+import LoginEmail from "./components/LoginEmail";
+import NoteList from "./components/NoteList";
 
-// import { app } from "./util/realm";
+export default function App() {
+  const [user, setUser] = useState(app.currentUser);
 
-// import IndexMenu from "./components/IndexMenu";
-// import LoginEmail from "./components/LoginEmail";
-
-// function App() {
-//   const [user, setUser] = useState(null);
-//   const storage = app.currentUser;
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     if (storage !== null && storage.hasOwnProperty("_accessToken")) {
-//       setUser(storage);
-//       navigate("/notelist");
-//     }
-//   }, []);
-
-//   return (
-//     <div className="app">
-//       <p>아무단어장 리팩토링</p>
-//       <IndexMenu />
-//       {user ? <Outlet /> : <LoginEmail />}
-//     </div>
-//   );
-// }
-
-function App() {
-  return <div>vite server test</div>;
+  return (
+    <div className="app">
+      <div>app</div>
+      {user !== null && user.hasOwnProperty("_accessToken") ? (
+        <div>user</div>
+      ) : (
+        <LoginEmail />
+      )}
+      <NoteList />
+    </div>
+  );
 }
-
-export { App };

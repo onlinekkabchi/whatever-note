@@ -16,14 +16,19 @@ async function createServer() {
   app.use("*", async (req, res, next) => {
     try {
       const url = req.originalUrl;
-      let template, render;
+      // let template, render;
 
-      template = fs.readFileSync(path.resolve("index.html"), "utf-8");
+      let template = fs.readFileSync(path.resolve("index.html"), "utf-8");
 
       template = await vite.transformIndexHtml(url, template);
-      render = (await vite.ssrLoadModule("/src/entry-server.jsx")).render;
 
-      const appHtml = await render(url, {});
+      const render = (await vite.ssrLoadModule("/src/entry-server.jsx")).render;
+
+      const appHtml = await render(url);
+
+      console.log("server.js");
+      console.log(url);
+      console.log(render);
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml);
 
