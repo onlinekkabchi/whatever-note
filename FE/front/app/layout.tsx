@@ -1,5 +1,4 @@
 import "../src/styles/style.css";
-import { App } from "../src/App";
 import IndexMenu from "../src/components/IndexMenu";
 
 export default function RootLayout({
