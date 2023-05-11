@@ -1,22 +1,15 @@
-import { useNavigate } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 
 export default function IndexMenu() {
-  const navigate = useNavigate();
   const theme = "black-white--";
   const className = theme + "index-menu";
 
-  const goHome = () => {
-    navigate("/");
-  };
-
-  const goNotes = () => {
-    navigate("/notes");
-  };
-
   return (
     <ul className={className}>
-      <li>Home</li>
-      <li>Notes</li>
+      <Link href="/">Home</Link>
+      <Link href="/notes">Notes</Link>
     </ul>
   );
 }

@@ -1,3 +1,7 @@
+"use client";
+
+import LoginEmail from "../src/components/LoginEmail";
+
 export default function Page() {
-  return <h1>vercel deployment test</h1>;
+  return <LoginEmail />;
 }

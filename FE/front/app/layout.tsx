@@ -1,4 +1,5 @@
-import { App } from "../src/App";
+import "../src/styles/style.css";
+import IndexMenu from "../src/components/IndexMenu";
 
 export default function RootLayout({
   children,
@@ -8,10 +9,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header>{children}</header>
-        <main>
-          <App />
-        </main>
+        <header>
+          <p>아무단어장 NextJs로 리팩토링중..</p>
+        </header>
+        <IndexMenu />
+        <main>{children}</main>
       </body>
     </html>
   );
