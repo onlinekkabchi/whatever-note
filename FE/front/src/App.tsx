@@ -8,8 +8,8 @@ import LoginEmail from "./components/LoginEmail";
 import IndexMenu from "./components/IndexMenu";
 
 function App() {
-  const [user, setUser] = useState(app.currentUser);
-  // const user = app.currentUser;
+  // const [user, setUser] = useState(app.currentUser);
+  const user = app.currentUser;
 
   useEffect(() => {
     console.log("next test");
