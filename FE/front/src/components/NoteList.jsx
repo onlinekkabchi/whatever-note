@@ -10,9 +10,7 @@ export default function NoteList() {
 
   const [notes, setNotes] = useState(null);
 
-  useEffect(() => {}, []);
-
-  if (notes === null) return <div>no notes</div>;
+  if (notes === null) return <ul className={className.list}>노트 없음</ul>;
 
   return (
     <ul className={className.list}>
