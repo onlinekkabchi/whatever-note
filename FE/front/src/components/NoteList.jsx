@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function NoteList() {
   const theme = "black-white--";
@@ -11,16 +10,7 @@ export default function NoteList() {
 
   const [notes, setNotes] = useState(null);
 
-  const fetchData = () => {
-    axios
-      .post("/api/notes")
-      .then((res) => res.json())
-      .then((res) => console.log(res));
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => {}, []);
 
   if (notes === null) return <div>no notes</div>;
 
