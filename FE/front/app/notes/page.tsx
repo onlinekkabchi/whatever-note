@@ -1,10 +1,12 @@
-import NoteList from "../../src/components/NoteList";
+import { lambdatest } from "../../src/_api/lambda";
 
-export default function Page() {
+export default async function Page() {
+  const data = await lambdatest();
+
   return (
-    <>
-      <p>notes</p>
-      <NoteList />
-    </>
+    <div>
+      <h3>Notes</h3>
+      <p>{data}</p>
+    </div>
   );
 }
