@@ -11,7 +11,13 @@ function LoginEmail() {
   return (
     <>
       {user !== null && user.hasOwnProperty("_accessToken") ? (
-        <p>user logged</p>
+        <p
+          onClick={() => {
+            console.log("tester");
+          }}
+        >
+          user logged
+        </p>
       ) : (
         <div style={{ marginTop: "2%" }}>
           <input
