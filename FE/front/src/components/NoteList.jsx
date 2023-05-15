@@ -1,11 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { app } from "../util/realm";
 
 export default function NoteList() {
-  const user = app.currentUser;
-  const token = app.currentUser._accessToken;
   const theme = "black-white--";
   const className = {
     list: theme + "note-list",
