@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { lambdaUrl, lambdaReq } from "../_api/lambda";
 
 export default function NoteList() {
   const theme = "black-white--";
@@ -11,22 +12,17 @@ export default function NoteList() {
   const [notes, setNotes] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(
-        "https://tkimv2gaxyuw5rgsfy3gyowcji0tftej.lambda-url.ap-northeast-2.on.aws/",
-        {
-          method: "POST",
-          body: JSON.stringify({ runtime: 11 }),
-        }
-      );
+    async function fetching() {
+      const res = await fetch(lambdaUrl, lambdaReq);
       const result = await res.json();
       setNotes(result.result);
     }
 
-    fetchData();
+    fetching();
   }, []);
 
-  if (notes === null) return <ul className={className.list}>노트 없음</ul>;
+  if (notes === null || notes === undefined)
+    return <ul className={className.list}>노트 없음</ul>;
 
   return (
     <ul className={className.list}>
