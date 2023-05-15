@@ -19,13 +19,16 @@
 
 export const lambdatest = async () => {
   const res = await fetch(
+    // uri
     "https://tkimv2gaxyuw5rgsfy3gyowcji0tftej.lambda-url.ap-northeast-2.on.aws/"
   );
+  const json = await res.json();
+  const stringified = await JSON.stringify(json);
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
 
-  return res.json();
+  return stringified;
 };

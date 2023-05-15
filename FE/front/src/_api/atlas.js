@@ -8,7 +8,3 @@ export async function helloworld() {
 
   return result;
 }
-
-export async function getNoteList() {
-  const result = await fetch("");
-}
