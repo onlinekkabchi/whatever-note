@@ -1,7 +1,12 @@
 "use client";
 
+import "../src/styles/style.css";
 import LoginEmail from "../src/components/LoginEmail";
 
 export default function Page() {
-  return <LoginEmail />;
+  return (
+    <div>
+      <LoginEmail />
+    </div>
+  );
 }
