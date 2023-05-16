@@ -1,7 +1,10 @@
 export async function GET() {
-  return new Response(JSON.stringify({ nextjs: "tested!" }), {
-    status: 200,
-  });
+  return new Response(
+    JSON.stringify({ nextjs: "route.ts 잘 작동하고 있는지 테스트" }),
+    {
+      status: 200,
+    }
+  );
 }
 
 // export async function GET(request: Request) {}
