@@ -14,8 +14,25 @@ export default function NoteList() {
   useEffect(() => {
     async function fetching() {
       const res = await fetch(lambdaUrl, lambdaReq);
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
       const result = await res.json();
       setNotes(result.result);
+    }
+
+    fetching();
+  }, []);
+
+  useEffect(() => {
+    async function fetching() {
+      const res = await fetch("/notes/api");
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await res.json();
+      console.log("fetching");
+      console.log(result);
     }
 
     fetching();
