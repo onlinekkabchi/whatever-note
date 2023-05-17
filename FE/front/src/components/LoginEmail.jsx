@@ -1,23 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { app, login } from "../util/realm";
 
 function LoginEmail() {
-  const [user, setUser] = useState(app.currentUser);
+  const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    setUser(app.currentUser);
+  });
+
   return (
-    <>
+    <div>
       {user !== null && user.hasOwnProperty("_accessToken") ? (
-        <p
+        <button
           onClick={() => {
-            console.log("tester");
+            console.log(user);
           }}
         >
-          user logged
-        </p>
+          logged
+        </button>
       ) : (
         <div style={{ marginTop: "2%" }}>
           <input
@@ -37,7 +41,7 @@ function LoginEmail() {
           <button onClick={() => login(email, password)}>login</button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

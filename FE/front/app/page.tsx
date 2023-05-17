@@ -1,9 +1,18 @@
 // "use client";
 
 import "../src/styles/style.css";
-// import LoginEmail from "../src/components/LoginEmail";
+import LoginEmail from "../src/components/LoginEmail";
+import LoginKakao from "../src/components/LoginKakao";
+// import Link from "next/link";
 
 export default function Page() {
   // return <LoginEmail />;
-  return <div>아무단어장에 오신걸 환영합니다.</div>;
+  return (
+    <section>
+      {/* <Link href="/">Home</Link>
+      <Link href="/notes">Notes</Link> */}
+      <LoginEmail />
+      <LoginKakao />
+    </section>
+  );
 }
