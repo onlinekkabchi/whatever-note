@@ -1,27 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { app, login } from "../util/realm";
+import { useState, useEffect } from "react";
+import { app, login, logout } from "../util/realm";
+
+const style = {
+  width: "180px",
+  height: "40px",
+  border: "1px solid black",
+  borderRadius: "5px",
+};
 
 function LoginEmail() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleLogIn = async () => {
+    await login(email, password).then((result) => setUser(result));
+  };
+
+  const handleLogOut = async () => {
+    await logout().then((result) => setUser(result));
+  };
+
   useEffect(() => {
-    setUser(app.currentUser);
-  });
+    if (app.currentUser !== null) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+    console.log(app.currentUser);
+  }, []);
 
   return (
     <div>
-      {user !== null && user.hasOwnProperty("_accessToken") ? (
-        <button
-          onClick={() => {
-            console.log(user);
-          }}
-        >
-          logged
-        </button>
+      {user ? (
+        <div style={style}>Realm User Logged In</div>
       ) : (
         <div style={{ marginTop: "2%" }}>
           <input
@@ -38,7 +52,7 @@ function LoginEmail() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={() => login(email, password)}>login</button>
+          <button onClick={handleLogIn}>login</button>
         </div>
       )}
     </div>

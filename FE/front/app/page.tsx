@@ -1,18 +1,13 @@
-// "use client";
-
 import "../src/styles/style.css";
-import LoginEmail from "../src/components/LoginEmail";
 import LoginKakao from "../src/components/LoginKakao";
-// import Link from "next/link";
+import LoginSimple from "../src/components/LoginSimple";
 
-export default function Page() {
-  // return <LoginEmail />;
+export default function () {
   return (
     <section>
-      {/* <Link href="/">Home</Link>
-      <Link href="/notes">Notes</Link> */}
-      <LoginEmail />
+      <LoginSimple />
       <LoginKakao />
+      {/* <LoginEmail /> */}
     </section>
   );
 }

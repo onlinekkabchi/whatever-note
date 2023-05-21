@@ -1,3 +1,26 @@
+.login-simple {
+  margin-block: 1%;
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  height: auto;
+}
+.login-simple input[type=text] {
+  height: 20px;
+  margin-block: 1%;
+}
+.login-simple input[type=email] {
+  height: 20px;
+  margin-block: 1%;
+}
+.login-simple input[type=button] {
+  height: 28px;
+  margin-top: 1%;
+  margin-bottom: 5%;
+  background-color: #ebebeb;
+  border: none;
+}
+
 .black-white--index-menu {
   display: flex;
   padding: 0;
@@ -28,9 +51,20 @@
   margin-block: 10px;
 }
 
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 body {
   margin: 0;
   padding: 40px;
+  font-family: "omyu_pretty";
+}
+
+main {
+  padding-top: 1%;
 }
 
 .app {

@@ -5,9 +5,3 @@ export const lambdaReq = {
   method: "POST",
   body: JSON.stringify({ runtime: 11 }),
 };
-
-// export async function fetchData(uri, req) {
-//   const res = await fetch(uri, req);
-//   const result = await res.json();
-//   return result;
-// }
