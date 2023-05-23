@@ -2,8 +2,12 @@
   margin-block: 1%;
   display: flex;
   flex-direction: column;
-  width: 180px;
+  width: 150px;
   height: auto;
+  border: 1px solid black;
+  padding-inline: 15px;
+  padding-bottom: 10px;
+  border-radius: 5px;
   input[type="text"] {
     height: 20px;
     margin-block: 1%;
