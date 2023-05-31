@@ -1,45 +1,32 @@
-import fs from "fs";
 import path from "path";
 import express from "express";
-import { createServer as createViteServer } from "vite";
+import kakaoRouter from "./server/routes/kakao.js";
+import mongoRouter from "./server/routes/mongo-connect.js";
+import noteRouter from "./server/routes/notes.js";
+import cors from "cors";
 
-async function createServer() {
-  const app = express();
+const app = express();
+const PORT = 8080;
 
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    appType: "custom",
-  });
+app.set("port", PORT);
 
-  app.use(vite.middlewares);
+app.use(express.static("dist"));
+app.use(cors({ origin: "http://localhost:8088" }));
 
-  app.use("*", async (req, res, next) => {
-    try {
-      const url = req.originalUrl;
-      // let template, render;
+app.use("/login", kakaoRouter);
+app.use("/mongo", mongoRouter);
+app.use("/api", noteRouter);
 
-      let template = fs.readFileSync(path.resolve("index.html"), "utf-8");
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./dist/index.html"));
+});
 
-      template = await vite.transformIndexHtml(url, template);
+app.get("*.css", (req, res, next) => {
+  res.send("css files");
+  res.contentType("text/css");
+  next();
+});
 
-      const render = (await vite.ssrLoadModule("/src/entry-server.jsx")).render;
-
-      const appHtml = await render(url);
-
-      console.log("server.js");
-      console.log(url);
-      console.log(render);
-
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
-
-      res.status(200).set({ "Content-Type": "text/html" }).end(html);
-    } catch (e) {
-      vite.ssrFixStacktrace(e);
-      next(e);
-    }
-  });
-
-  app.listen(5173);
-}
-
-createServer();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

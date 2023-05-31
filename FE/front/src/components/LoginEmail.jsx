@@ -1,13 +1,31 @@
 import { useState } from "react";
-import { app, login } from "../util/realm";
+import { app, login, logout } from "../util/realm";
 
-function LoginEmail() {
+export default function LoginEmail() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      await login(email, password).then((res) => setLoggedIn(res));
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  if (loggedIn) {
+    return (
+      <div>
+        <p>Logged</p>
+        <button onClick={logout}>wanna out?</button>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <input
+      {/* <input
         type="email"
         name="email"
         placeholder="sample@sample.com"
@@ -21,9 +39,8 @@ function LoginEmail() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={() => login(email, password)}>login</button>
+      <button onClick={handleLogin}>login</button> */}
+      <button>click and simply login</button>
     </div>
   );
 }
-
-export default LoginEmail;

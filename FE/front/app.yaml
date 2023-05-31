@@ -2,4 +2,4 @@ runtime: nodejs16
 
 handlers:
   - url: /.*
-    script: auto
+    script: server.js

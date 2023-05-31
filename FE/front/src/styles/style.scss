@@ -1,11 +1,16 @@
+@import "./font.scss";
 @import "./black-white.scss";
 
 body {
   margin: 0;
-}
-
-.app {
-  width: 100vh;
+  font-family: "Pretendard-Regular";
+  width: 100%;
   height: 100vh;
   padding: 20px;
+  margin: 0;
+  background-color: aliceblue;
+}
+
+main {
+  padding-top: 10px;
 }

@@ -1,21 +1,29 @@
-import { useState } from "react";
-
-import { app } from "./util/realm";
-import LoginEmail from "./components/LoginEmail";
-import NoteList from "./components/NoteList";
+import { useEffect } from "react";
+import { AuthContextProvider } from "./contexts/authContext";
+import IndexMenu from "./components/IndexMenu";
+import { Outlet, useNavigate } from "react-router-dom";
+import paramToken from "./util/param-token";
 
 export default function App() {
-  const [user, setUser] = useState(app.currentUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = paramToken();
+    if (token) {
+      navigate(`/notes?token=${token}`);
+    } else {
+      navigate("/login/kakao");
+    }
+  }, [navigate]);
 
   return (
-    <div className="app">
-      <div>app</div>
-      {user !== null && user.hasOwnProperty("_accessToken") ? (
-        <div>user</div>
-      ) : (
-        <LoginEmail />
-      )}
-      <NoteList />
-    </div>
+    <>
+      <AuthContextProvider>
+        <IndexMenu />
+        <main>
+          <Outlet />
+        </main>
+      </AuthContextProvider>
+    </>
   );
 }
