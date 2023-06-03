@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { app, login, logout } from "../util/realm";
+import { app, login, logout } from "../../util/realm";
 
 export default function LoginEmail() {
   const [email, setEmail] = useState("");

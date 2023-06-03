@@ -3,3 +3,6 @@ runtime: nodejs16
 handlers:
   - url: /.*
     script: server.js
+  - url: /assets
+    static_dir: dist/assets
+    expiration: 1d

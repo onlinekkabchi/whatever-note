@@ -1,5 +1,5 @@
-import src from "../static/img/kakao_login_medium_narrow.png";
-import { kakaoLoginUrl } from "../url/kakao";
+import src from "../../static/img/kakao_login_medium_narrow.png";
+import { kakaoLoginUrl } from "../../url/kakao";
 
 const style = {
   cursor: "pointer",

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { AuthContextProvider } from "./contexts/authContext";
-import IndexMenu from "./components/IndexMenu";
+import IndexMenu from "./components/index/IndexMenu";
 import { Outlet, useNavigate } from "react-router-dom";
 import paramToken from "./util/param-token";
+import { ThemeContextProvider } from "./contexts/themeContext";
 
 export default function App() {
   const navigate = useNavigate();

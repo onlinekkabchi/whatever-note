@@ -32,12 +32,64 @@
     margin: 0;
     font-size: 15px;
     li {
+      display: flex;
+      align-items: center;
       list-style: none;
       width: 400px;
       height: 40px;
       border: 1px solid black;
       border-radius: 10px;
       margin-bottom: 10px;
+      a {
+        text-decoration: none;
+        color: black;
+        padding-inline: 10px;
+      }
+      input[type="text"] {
+        font-size: 15px;
+        border: none;
+        background-color: transparent;
+      }
     }
   }
+
+  &--card-list {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    li {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      width: 400px;
+      height: 40px;
+      border: 1px solid black;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      button {
+        cursor: pointer;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+        padding-inline: 10px;
+        cursor: pointer;
+      }
+      input[type="text"] {
+        font-size: 15px;
+        border: none;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.content {
+  height: 0;
+  visibility: hidden;
+}
+
+.true {
+  height: auto;
+  visibility: visible;
 }

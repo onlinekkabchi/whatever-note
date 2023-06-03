@@ -1,10 +1,14 @@
 import express from "express";
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const router = express.Router();
 
 const kakao = {
   clientID: "c148a94558540f7e0f14a832a24814b5",
-  redirectURL: "http://localhost:8080/login/kakao",
+  redirectURL: "https://whatever-note-387110.an.r.appspot.com/login/kakao",
   accessTokenURL: "https://kauth.kakao.com/oauth/token",
 };
 

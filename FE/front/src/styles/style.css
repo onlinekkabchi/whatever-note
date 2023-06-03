@@ -40,12 +40,63 @@
   font-size: 15px;
 }
 .black-white--note-list li {
+  display: flex;
+  align-items: center;
   list-style: none;
   width: 400px;
   height: 40px;
   border: 1px solid black;
   border-radius: 10px;
   margin-bottom: 10px;
+}
+.black-white--note-list li a {
+  text-decoration: none;
+  color: black;
+  padding-inline: 10px;
+}
+.black-white--note-list li input[type=text] {
+  font-size: 15px;
+  border: none;
+  background-color: transparent;
+}
+.black-white--card-list {
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+}
+.black-white--card-list li {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 400px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.black-white--card-list li button {
+  cursor: pointer;
+}
+.black-white--card-list li a {
+  text-decoration: none;
+  color: black;
+  padding-inline: 10px;
+  cursor: pointer;
+}
+.black-white--card-list li input[type=text] {
+  font-size: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.content {
+  height: 0;
+  visibility: hidden;
+}
+
+.true {
+  height: auto;
+  visibility: visible;
 }
 
 body {

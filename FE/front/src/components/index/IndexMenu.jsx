@@ -6,8 +6,7 @@ export default function IndexMenu() {
     <ul className={className}>
       <Link to="login/kakao">Kakao</Link>
       <Link to="notes">Notes</Link>
-      <Link to="cards">Cards</Link>
-      {/* <Link to="theme">Theme</Link> */}
+
       <Link to="stickers">Stickers</Link>
     </ul>
   );
