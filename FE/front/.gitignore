@@ -53,6 +53,4 @@ yarn-error.log*
 /.next
 
 /pages
-/src/_tests
-
 /server/mongo
