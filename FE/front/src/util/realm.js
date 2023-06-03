@@ -8,3 +8,7 @@ export const login = async (email, password) => {
 
   return logged;
 };
+
+export const logout = async () => {
+  await app.currentUser.logOut();
+};

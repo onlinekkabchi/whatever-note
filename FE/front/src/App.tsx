@@ -1,14 +1,29 @@
-"use client";
+import { useEffect } from "react";
+import { AuthContextProvider } from "./contexts/authContext";
+import IndexMenu from "./components/index/IndexMenu";
+import { Outlet, useNavigate } from "react-router-dom";
+import paramToken from "./util/param-token";
 
-import LoginEmail from "./components/LoginEmail";
+export default function App() {
+  const navigate = useNavigate();
 
-function App() {
+  useEffect(() => {
+    const token = paramToken();
+    if (token) {
+      navigate(`/notes?token=${token}`);
+    } else {
+      navigate("/login/kakao");
+    }
+  }, [navigate]);
+
   return (
-    <div className="app">
-      <p>nextjs client component</p>
-      <LoginEmail />
-    </div>
+    <>
+      <AuthContextProvider>
+        <IndexMenu />
+        <main>
+          <Outlet />
+        </main>
+      </AuthContextProvider>
+    </>
   );
 }
-
-export { App };

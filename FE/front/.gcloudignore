@@ -1,0 +1,8 @@
+.gcloudignore
+
+# If you would like to upload your .git directory, .gitignore file or filesfrom your .gitignore file, remove the corresponding line below:
+
+.git
+.gitignore
+
+node_modules/

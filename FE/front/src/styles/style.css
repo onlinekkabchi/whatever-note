@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
 .black-white--index-menu {
   display: flex;
   padding: 0;
@@ -5,6 +17,7 @@
 }
 .black-white--index-menu a {
   text-decoration: none;
+  color: black;
   width: 80px;
   height: 40px;
   border: 1px solid black;
@@ -12,31 +25,92 @@
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  margin-right: 2px;
-  color: balck;
+  font-size: 15px;
+  margin-inline: 2px;
+}
+.black-white--index-menu a:focus {
+  color: lightskyblue;
+}
+.black-white--index-menu a:active {
+  color: lightskyblue;
 }
 .black-white--note-list {
   padding: 0;
   margin: 0;
+  font-size: 15px;
 }
 .black-white--note-list li {
+  display: flex;
+  align-items: center;
   list-style: none;
   width: 400px;
   height: 40px;
   border: 1px solid black;
   border-radius: 10px;
-  margin-block: 10px;
+  margin-bottom: 10px;
+}
+.black-white--note-list li a {
+  text-decoration: none;
+  color: black;
+  padding-inline: 10px;
+}
+.black-white--note-list li input[type=text] {
+  font-size: 15px;
+  border: none;
+  background-color: transparent;
+}
+.black-white--card-list {
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+}
+.black-white--card-list li {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 400px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.black-white--card-list li button {
+  cursor: pointer;
+}
+.black-white--card-list li a {
+  text-decoration: none;
+  color: black;
+  padding-inline: 10px;
+  cursor: pointer;
+}
+.black-white--card-list li input[type=text] {
+  font-size: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.content {
+  height: 0;
+  visibility: hidden;
+}
+
+.true {
+  height: auto;
+  visibility: visible;
 }
 
 body {
   margin: 0;
-  padding: 40px;
-}
-
-.app {
-  width: 100vh;
+  font-family: "Pretendard-Regular";
+  width: 100%;
   height: 100vh;
   padding: 20px;
+  margin: 0;
+  background-color: aliceblue;
+}
+
+main {
+  padding-top: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

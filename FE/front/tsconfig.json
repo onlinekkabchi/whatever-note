@@ -27,11 +27,6 @@
       }
     ]
   },
-  "include": ["src", "server", "server.js", ".next/types/**/*.ts", "app"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
-  "exclude": ["node_modules"]
+  "include": ["src", "server", "public/index.js"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

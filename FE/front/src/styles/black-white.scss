@@ -4,7 +4,9 @@
     padding: 0;
     margin: 0;
     a {
+      // list-style: none;
       text-decoration: none;
+      color: black;
       width: 80px;
       height: 40px;
       border: 1px solid black;
@@ -12,21 +14,82 @@
       text-align: center;
       vertical-align: middle;
       cursor: pointer;
-      margin-right: 2px;
-      color: balck;
+      font-size: 15px;
+      margin-inline: 2px;
+
+      &:focus {
+        color: lightskyblue;
+      }
+
+      &:active {
+        color: lightskyblue;
+      }
     }
   }
 
   &--note-list {
     padding: 0;
     margin: 0;
+    font-size: 15px;
     li {
+      display: flex;
+      align-items: center;
       list-style: none;
       width: 400px;
       height: 40px;
       border: 1px solid black;
       border-radius: 10px;
-      margin-block: 10px;
+      margin-bottom: 10px;
+      a {
+        text-decoration: none;
+        color: black;
+        padding-inline: 10px;
+      }
+      input[type="text"] {
+        font-size: 15px;
+        border: none;
+        background-color: transparent;
+      }
     }
   }
+
+  &--card-list {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    li {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      width: 400px;
+      height: 40px;
+      border: 1px solid black;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      button {
+        cursor: pointer;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+        padding-inline: 10px;
+        cursor: pointer;
+      }
+      input[type="text"] {
+        font-size: 15px;
+        border: none;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.content {
+  height: 0;
+  visibility: hidden;
+}
+
+.true {
+  height: auto;
+  visibility: visible;
 }
