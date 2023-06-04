@@ -95,6 +95,9 @@ export default function Notes() {
       <ul className={className.list}>
         <h3>WHATEVER NOTES</h3>
         {NewForm(notes, createNote)}
+        {/* {render()}
+         */}
+
         {render()}
       </ul>
     </>

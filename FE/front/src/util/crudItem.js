@@ -1,3 +1,20 @@
+export const createContent = (prev, info, len) => {
+  const newItem = {
+    id: len,
+    seq: len * 1000,
+    info,
+    info,
+  };
+  return [...prev, newItem];
+};
+
+export const updateContent = (prev, index, updated) => {
+  const newList = [...prev];
+  newList[index].info = updated;
+  delete newList[index].edit;
+  return newList;
+};
+
 export const createItem = (prev, title, len) => {
   const newItem = {
     id: len,
