@@ -18,9 +18,11 @@ export default function Cards() {
   const [cards, setItems] = useState([]);
 
   useEffect(() => {
-    fetchAPI(CARDURL, null)
-      .then((res) => setItems(res.data.cards))
-      .catch((err) => console.error("카드 fetch 에러.. " + err));
+    if (cards.length < 1) {
+      fetchAPI(CARDURL, null)
+        .then((res) => setItems(res.data.cards))
+        .catch((err) => console.error("카드 fetch 에러.. " + err));
+    }
   }, []);
 
   const createNote = (title, len) => {
@@ -54,11 +56,13 @@ export default function Cards() {
   const open = (index) => {
     setItems((prev) => {
       const next = [...prev];
-      if (!next[index].open) {
-        next[index].open = true;
+
+      if (!next[index].open || next[index].open === "hidden") {
+        next[index].open = "visible";
       } else {
-        next[index].open = false;
+        next[index].open = "hidden";
       }
+
       return next;
     });
   };

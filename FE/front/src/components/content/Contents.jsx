@@ -2,38 +2,37 @@ import { useEffect, useState } from "react";
 import { fetchAPI } from "../../_api/fetchAPI";
 
 import NewForm from "../form/NewItem";
-import EditForm from "../form/EditForm";
+import EditForm from "../form/EditFormContent";
+import Item from "./Content";
+import Default from "./ContentDefault";
 
 import { CONTENTURL } from "../../url/api";
-import { theme } from "../../util/theme";
+import { theme, className } from "../../util/theme";
 
-import { createItem, updateItem, deleteItem } from "../../util/crudItem";
+import { createContent, updateContent, deleteItem } from "../../util/crudItem";
 
 export default function Contents(props) {
   const cardId = props.cardId;
   const open = props.open;
 
-  const [className, setClassName] = useState("content");
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    if (open === true && items.length < 1) {
+    if (open === "visible") {
       fetchAPI(CONTENTURL, null)
         .then((res) => {
           setItems(res.data.contents);
         })
         .catch((err) => console.error("콘텐츠 fetch 에러.. " + err));
-    } else {
-      console.log("no content data fetch");
     }
   }, [open]);
 
-  const createNote = (title, len) => {
-    setItems((prevNotes) => createItem(prevNotes, title, len));
+  const createNote = (info, len) => {
+    setItems((prevNotes) => createContent(prevNotes, info, len));
   };
 
   const updateNote = (index, updatedNote) => {
-    setItems((prevNotes) => updateItem(prevNotes, index, updatedNote));
+    setItems((prevNotes) => updateContent(prevNotes, index, updatedNote));
   };
 
   const deleteNote = (index) => {
@@ -56,24 +55,19 @@ export default function Contents(props) {
     });
   };
 
-  // return (
-  //   <div className={className + " " + open} id={cardId}>
-  //     content
-  //   </div>
-  // );
-
   const render = () => {
     if (items.length > 0) {
       return items
-        .map((item, index) => (
-          // Item(
-          //   item,
-          //   index,
-          //   EditForm(items, index, updateNote, cancelEditor),
-          //   Default(item, index, editNote, deleteNote, open)
-          // )
-          <li key={index}>{item.info}</li>
-        ))
+        .map(
+          (item, index) =>
+            Item(
+              item,
+              index,
+              EditForm(items, index, updateNote, cancelEditor),
+              Default(item, index, editNote, deleteNote)
+            )
+          // <li key={index}>{item.info}</li>
+        )
         .reverse();
     } else {
       return <li>노트없음</li>;
@@ -82,7 +76,7 @@ export default function Contents(props) {
 
   return (
     <>
-      <ul className={className + " " + open}>
+      <ul className={className.contents + " " + open}>
         {/* <h3>NOTE {noteId}</h3> */}
         {NewForm(items, createNote)}
         {render()}

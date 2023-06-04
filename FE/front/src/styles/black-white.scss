@@ -82,14 +82,19 @@
       }
     }
   }
+
+  &--content-list {
+    height: 0;
+    visibility: hidden;
+  }
 }
 
-.content {
-  height: 0;
-  visibility: hidden;
-}
-
-.true {
+.visible {
   height: auto;
   visibility: visible;
+}
+
+.hidden {
+  height: 0;
+  visibility: hidden;
 }

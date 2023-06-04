@@ -1,4 +1,4 @@
-import src from "../../static/img/kakao_login_medium_narrow.png";
+import img from "../../static/img/kakao_login_medium_narrow.png";
 import { kakaoLoginUrl } from "../../url/kakao";
 
 const style = {
@@ -15,6 +15,7 @@ export default function LoginKakao() {
   };
 
   return (
-    <img onClick={handleKakaoLogin} src={src} alt="kakao login" style={style} />
+    <img src={img} alt="kakao login" style={style} />
+    // <img onClick={handleKakaoLogin} src={img} alt="kakao login" style={style} />
   );
 }
